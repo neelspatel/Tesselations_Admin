@@ -13,4 +13,4 @@ def AMA1(request):
 		return response
 	else:
 		form = AMA1Form()
-		return render(request, 'AMA1.html', 'form': form)
+		return render(request, 'AMA1.html', {'form': form})
