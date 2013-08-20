@@ -171,6 +171,7 @@
 					</p>
 				</td>
 				<td width="440" colspan="13" valign="top">
+					{{ form.additional_documents }}
 				</td>
 			</tr>
 			<tr>
@@ -180,6 +181,7 @@
 					</p>
 				</td>
 				<td width="220" colspan="5" valign="top">
+					{{ form.has_grievance_been_raised_before }}
 				</td>
 			</tr>
 			<tr>
@@ -189,6 +191,7 @@
 					</p>
 				</td>
 				<td width="440" colspan="13" valign="top">
+					{{ form.proposed_solutions_according_to_complainer }}	
 				</td>
 			</tr>
 			<tr>
@@ -206,59 +209,13 @@
 				</td>
 			</tr>
 			<tr>
-				<td width="135" colspan="3">
+				<td width="99">
 					<p>
-						<strong>Entity involved</strong>
+						<strong>Entity Involved</strong> (please choose Project if complaint involves AMA1 personnel or activities)
 					</p>
 				</td>
-				<td width="404" colspan="11">
-					<p>
-						(Please choose Project if complaint involves AMA1 personnel or activities)
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<td width="135" colspan="3">
-					<p align="center">
-						<strong>Project</strong>
-					</p>
-				</td>
-				<td width="128" colspan="4">
-					<p align="center">
-						<strong>Contractor (indicate the contractor name and associated activity)</strong>
-					</p>
-				</td>
-				<td width="149" colspan="5">
-					<p align="center">
-						<strong>Government (specify)</strong>
-					</p>
-				</td>
-				<td width="128" colspan="2">
-					<p align="center">
-						<strong>Other (specify)</strong>
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<td width="135" colspan="3">
-					<p>
-						<strong></strong>
-					</p>
-				</td>
-				<td width="128" colspan="4">
-					<p>
-						<strong></strong>
-					</p>
-					<p>
-						<strong></strong>
-					</p>
-				</td>
-				<td width="149" colspan="5" valign="top">
-					<p>
-						<strong></strong>
-					</p>
-				</td>
-				<td width="128" colspan="2" valign="top">
+				<td width="440" colspan="13" valign="top">
+					{{ form.entity_involved }}	
 				</td>
 			</tr>
 			<tr>
@@ -268,6 +225,7 @@
 					</p>
 				</td>
 				<td width="404" colspan="11">
+					{{ form.name_of_supervisor }}	
 				</td>
 			</tr>
 			<tr>
@@ -277,6 +235,7 @@
 					</p>
 				</td>
 				<td width="404" colspan="11">
+					{{ form.comments_from_contacted_person }}	
 				</td>
 			</tr>
 			<tr>
@@ -293,6 +252,7 @@
 					</p>
 				</td>
 				<td width="404" colspan="11">
+					{{ form.follow_up_actions }}	
 				</td>
 			</tr>
 			<tr>
@@ -302,6 +262,7 @@
 					</p>
 				</td>
 				<td width="404" colspan="11">
+					{{ form.response_details }}	
 				</td>
 			</tr>
 			<tr>
@@ -311,6 +272,7 @@
 					</p>
 				</td>
 				<td width="404" colspan="11">
+					{{ form.grievance_resolution_responsibility }}	
 				</td>
 			</tr>
 			<tr>
@@ -320,6 +282,7 @@
 					</p>
 				</td>
 				<td width="404" colspan="11">
+					{{ form.date_of_response }}
 				</td>
 			</tr>
 			<tr>
