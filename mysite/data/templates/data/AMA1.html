@@ -1,4 +1,438 @@
-<form action="/AMA1/" method="post">{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Submit" />
-</form>
+<head>
+	<link href='http://fonts.googleapis.com/css?family=Lato:300,300italic,700,900|Cabin:400,600,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<form action="/AMA1/" method="post">{% csrf_token %}
+	<table border="1" cellspacing="0" cellpadding="0" width="539">
+		<tbody>
+			<tr>
+				<td width="539" colspan="14">
+					<h1 style = "text-align:center;">AMA1 Grievance Form</h1>	
+					<p>					
+						<em>
+							Two grievance forms will be completed for each grievance raised: one form will be retained by the person raising the grievance, and one
+							form will be retained by AMA1 grievance personnel.
+						</em>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="539" colspan="14">
+					<p align="center">
+						<strong>Part I:</strong>
+						<em></em>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="99">
+					<p>
+						<strong>Grievance received by:</strong>
+					</p>
+				</td>
+				<td width="146" colspan="5" valign="top">
+				</td>
+				<td width="88" colspan="4" valign="top">
+					<p>
+						<strong>Date of recording grievance:</strong>
+					</p>
+				</td>
+				<td width="206" colspan="4" valign="top">
+				</td>
+			</tr>
+			<tr>
+				<td width="99">
+					<p>
+						<strong>Grievance ID number:</strong>
+					</p>
+				</td>
+				<td width="146" colspan="5" valign="top">
+				</td>
+				<td width="88" colspan="4" valign="top">
+					<p>
+						<strong>Name and ID of person with grievance:</strong>
+					</p>
+				</td>
+				<td width="206" colspan="4" rowspan="2" valign="top">
+				</td>
+			</tr>
+			<tr>
+				<td width="99">
+					<p>
+						<strong>Contact details (residence/tel.etc.)</strong>
+					</p>
+				</td>
+				<td width="234" colspan="9" valign="top">
+				</td>
+			</tr>
+			<tr>
+				<td width="99">
+					<p>
+						<strong>Location (village) of incident:</strong>
+					</p>
+				</td>
+				<td width="440" colspan="13" valign="top">
+				</td>
+			</tr>
+			<tr>
+				<td width="539" colspan="14">
+					<p align="center">
+						<strong>Alleged grievance</strong>
+						<em></em>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="99" valign="top">
+					What happened
+				</td>
+				<td width="440" colspan="13" valign="top">
+				</td>
+			</tr>
+			<tr>
+				<td width="99" valign="top">
+					When		
+				</td>
+				<td width="440" colspan="13" valign="top">
+				</td>
+			</tr>
+			<tr>
+				<td width="99" valign="top">
+					Where
+				</td>
+				<td width="440" colspan="13" valign="top">
+				</td>
+			</tr>
+			<tr>
+				<td width="99" valign="top">
+					Who is involved
+				</td>
+				<td width="440" colspan="13" valign="top">
+				</td>
+			</tr>
+			<tr>
+				<td width="99" valign="top">
+					Observations
+				</td>
+				<td width="440" colspan="13" valign="top">
+				</td>
+			</tr>
+			<tr>
+				<td width="99" rowspan="4">
+					<p>
+						<strong>Grievance category:</strong>
+					</p>
+				</td>
+				<td width="99" colspan="3" valign="top">
+					<p>
+						<strong>Compensation</strong>
+					</p>
+				</td>
+				<td width="35" valign="top">
+				</td>
+				<td width="99" colspan="5" valign="top">
+					<p>
+						<strong>Land</strong>
+					</p>
+				</td>
+				<td width="35" valign="top">
+				</td>
+				<td width="128" colspan="2" valign="top">
+					<p>
+						<strong>Accident / Damage</strong>
+					</p>
+				</td>
+				<td width="43" valign="top">
+				</td>
+			</tr>
+			<tr>
+				<td width="99" colspan="3" valign="top">
+					<p>
+						<strong>Environmental</strong>
+					</p>
+				</td>
+				<td width="35" valign="top">
+				</td>
+				<td width="99" colspan="5" valign="top">
+					<p>
+						<strong>Health</strong>
+					</p>
+				</td>
+				<td width="35" valign="top">
+				</td>
+				<td width="128" colspan="2" valign="top">
+					<p>
+						<strong>Safety &amp; Security</strong>
+					</p>
+				</td>
+				<td width="43" valign="top">
+				</td>
+			</tr>
+			<tr>
+				<td width="99" colspan="3" valign="top">
+					<p>
+						<strong>Behavior / Conduct</strong>
+					</p>
+				</td>
+				<td width="35" valign="top">
+				</td>
+				<td width="99" colspan="5" valign="top">
+					<p>
+						<strong>Misinformation</strong>
+					</p>
+				</td>
+				<td width="35" valign="top">
+				</td>
+				<td width="128" colspan="2" valign="top">
+					<p>
+						<strong>Recruitment</strong>
+					</p>
+				</td>
+				<td width="43" valign="top">
+				</td>
+			</tr>
+			<tr>
+				<td width="99" colspan="3" valign="top">
+					<p>
+						<strong>Other (describe)</strong>
+					</p>
+				</td>
+				<td width="35" valign="top">
+				</td>
+				<td width="305" colspan="9" valign="top">
+				</td>
+			</tr>
+			<tr>
+				<td width="99">
+					<p>
+						<strong>Additional documents provided:</strong>
+					</p>
+				</td>
+				<td width="440" colspan="13" valign="top">
+				</td>
+			</tr>
+			<tr>
+				<td width="319" colspan="9">
+					<p>
+						<strong>Has this grievance been raised before by anyone else? (If yes, provide details.)</strong>
+					</p>
+				</td>
+				<td width="220" colspan="5" valign="top">
+				</td>
+			</tr>
+			<tr>
+				<td width="99">
+					<p>
+						<strong>Proposed solutions (according to the complainer)</strong>
+					</p>
+				</td>
+				<td width="440" colspan="13" valign="top">
+				</td>
+			</tr>
+			<tr>
+				<td width="539" colspan="14">
+					<p>
+						<strong>Signature of person receiving grievance:</strong>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="539" colspan="14">
+					<p align="center">
+						<strong>Part II: Parties involved</strong>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="135" colspan="3">
+					<p>
+						<strong>Entity involved</strong>
+					</p>
+				</td>
+				<td width="404" colspan="11">
+					<p>
+						(Please choose Project if complaint involves AMA1 personnel or activities)
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="135" colspan="3">
+					<p align="center">
+						<strong>Project</strong>
+					</p>
+				</td>
+				<td width="128" colspan="4">
+					<p align="center">
+						<strong>Contractor (indicate the contractor name and associated activity)</strong>
+					</p>
+				</td>
+				<td width="149" colspan="5">
+					<p align="center">
+						<strong>Government (specify)</strong>
+					</p>
+				</td>
+				<td width="128" colspan="2">
+					<p align="center">
+						<strong>Other (specify)</strong>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="135" colspan="3">
+					<p>
+						<strong></strong>
+					</p>
+				</td>
+				<td width="128" colspan="4">
+					<p>
+						<strong></strong>
+					</p>
+					<p>
+						<strong></strong>
+					</p>
+				</td>
+				<td width="149" colspan="5" valign="top">
+					<p>
+						<strong></strong>
+					</p>
+				</td>
+				<td width="128" colspan="2" valign="top">
+				</td>
+			</tr>
+			<tr>
+				<td width="135" colspan="3" valign="top">
+					<p>
+						<strong>Name and other details of the supervisor contacted</strong>
+					</p>
+				</td>
+				<td width="404" colspan="11">
+				</td>
+			</tr>
+			<tr>
+				<td width="135" colspan="3">
+					<p>
+						<strong>Comments from the contacted person about the grievance</strong>
+					</p>
+				</td>
+				<td width="404" colspan="11">
+				</td>
+			</tr>
+			<tr>
+				<td width="539" colspan="14">
+					<p align="center">
+						<strong>Part III: Response Plan</strong>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="135" colspan="3">
+					<p>
+						<strong>Follow up actions </strong>
+					</p>
+				</td>
+				<td width="404" colspan="11">
+				</td>
+			</tr>
+			<tr>
+				<td width="135" colspan="3">
+					<p>
+						<strong>Response details </strong>
+					</p>
+				</td>
+				<td width="404" colspan="11">
+				</td>
+			</tr>
+			<tr>
+				<td width="135" colspan="3">
+					<p>
+						<strong>Grievance Resolution Responsibility </strong>
+					</p>
+				</td>
+				<td width="404" colspan="11">
+				</td>
+			</tr>
+			<tr>
+				<td width="135" colspan="3">
+					<p>
+						<strong>Date of response</strong>
+					</p>
+				</td>
+				<td width="404" colspan="11">
+				</td>
+			</tr>
+			<tr>
+				<td width="539" colspan="14">
+					<p align="center">
+						<strong>STATUS MONITORING PLAN</strong>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="131" colspan="2">
+					<p>
+						<strong>SOLVED </strong>
+					</p>
+				</td>
+				<td width="153" colspan="6">
+					<p>
+						<strong></strong>
+					</p>
+				</td>
+				<td width="255" colspan="6" rowspan="3" valign="top">
+				</td>
+			</tr>
+			<tr>
+				<td width="131" colspan="2">
+					<p>
+						<strong>NOT SOLVED</strong>
+					</p>
+				</td>
+				<td width="153" colspan="6">
+					<p>
+						<strong></strong>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="131" colspan="2">
+					<p>
+						<strong>PENDING</strong>
+					</p>
+				</td>
+				<td width="153" colspan="6">
+					<p>
+						<strong></strong>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="539" colspan="14">
+					<p>
+						<strong>COMMENTS </strong>
+					</p>
+					<p>
+						<strong></strong>
+					</p>
+					<p>
+						<strong></strong>
+					</p>
+					<p>
+						<strong></strong>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="131" colspan="2">
+					<p>
+						<strong>Date and Place</strong>
+					</p>
+				</td>
+				<td width="408" colspan="12">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<input type="submit" value="Submit" />
+	</form>
+</body>
+
