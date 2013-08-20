@@ -27,7 +27,7 @@ entities = (
 
 class AMA1(models.Model):
 	grievance_received_by = models.TextField(null=True, blank=True)
-	date_of_recording = models.DateField(null=True, blank=True)
+	date_of_recording = models.DateTimeField(null=True, blank=True)
 	name_and_id_of_person_with_grievance = models.TextField(null=True, blank=True)
 	contact_details = models.TextField(null=True, blank=True)
 	location = models.TextField(null=True, blank=True)
@@ -48,7 +48,7 @@ class AMA1(models.Model):
 	follow_up_actions = models.TextField(null=True, blank=True)
 	response_details = models.TextField(null=True, blank=True)
 	grievance_resolution_responsibility = models.TextField(null=True, blank=True)
-	date_of_response = models.DateField(null=True, blank=True)
+	date_of_response = models.DateTimeField(null=True, blank=True)
 	data_created_date = models.DateTimeField('Entry created:', null=True, blank=True)
 
 	def save(self):
