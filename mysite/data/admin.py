@@ -1,5 +1,5 @@
 from django.contrib import admin
-from data.models import Data
+from data.models import AMA1
 
-admin.site.register(Data)
+admin.site.register(AMA1)
 
