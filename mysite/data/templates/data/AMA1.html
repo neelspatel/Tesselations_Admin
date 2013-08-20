@@ -67,6 +67,7 @@
 					</p>
 				</td>
 				<td width="146" colspan="5" valign="top">
+					<emph>(Will be assigned upon saving)</emph>
 				</td>
 				<td width="88" colspan="4" valign="top">
 					<p>
@@ -74,6 +75,7 @@
 					</p>
 				</td>
 				<td width="206" colspan="4" rowspan="2" valign="top">
+					{{ form.name_and_id_of_person_with_grievance }}
 				</td>
 			</tr>
 			<tr>
@@ -83,6 +85,7 @@
 					</p>
 				</td>
 				<td width="234" colspan="9" valign="top">
+					{{ form.contact_details }}
 				</td>
 			</tr>
 			<tr>
@@ -90,8 +93,17 @@
 					<p>
 						<strong>Location (village) of incident:</strong>
 					</p>
+				</td>				
+				<td width="146" colspan="5" valign="top">
+					{{ form.location }}
 				</td>
-				<td width="440" colspan="13" valign="top">
+				<td width="88" colspan="4" valign="top">
+					<p>
+						<strong>Prod zone:</strong>
+					</p>
+				</td>
+				<td width="206" colspan="4" valign="top">
+					{{ form.prod_zone }}
 				</td>
 			</tr>
 			<tr>
@@ -107,6 +119,7 @@
 					What happened
 				</td>
 				<td width="440" colspan="13" valign="top">
+					{{ form.what_happened }}
 				</td>
 			</tr>
 			<tr>
@@ -114,6 +127,7 @@
 					When		
 				</td>
 				<td width="440" colspan="13" valign="top">
+					{{ form.when }}
 				</td>
 			</tr>
 			<tr>
@@ -121,6 +135,7 @@
 					Where
 				</td>
 				<td width="440" colspan="13" valign="top">
+					{{ form.where }}
 				</td>
 			</tr>
 			<tr>
@@ -128,6 +143,7 @@
 					Who is involved
 				</td>
 				<td width="440" colspan="13" valign="top">
+					{{ form.who }}
 				</td>
 			</tr>
 			<tr>
@@ -135,6 +151,7 @@
 					Observations
 				</td>
 				<td width="440" colspan="13" valign="top">
+					{{ form.observations }}
 				</td>
 			</tr>
 			<tr>
@@ -142,85 +159,10 @@
 					<p>
 						<strong>Grievance category:</strong>
 					</p>
-				</td>
-				<td width="99" colspan="3" valign="top">
-					<p>
-						<strong>Compensation</strong>
-					</p>
-				</td>
-				<td width="35" valign="top">
-				</td>
-				<td width="99" colspan="5" valign="top">
-					<p>
-						<strong>Land</strong>
-					</p>
-				</td>
-				<td width="35" valign="top">
-				</td>
-				<td width="128" colspan="2" valign="top">
-					<p>
-						<strong>Accident / Damage</strong>
-					</p>
-				</td>
-				<td width="43" valign="top">
-				</td>
-			</tr>
-			<tr>
-				<td width="99" colspan="3" valign="top">
-					<p>
-						<strong>Environmental</strong>
-					</p>
-				</td>
-				<td width="35" valign="top">
-				</td>
-				<td width="99" colspan="5" valign="top">
-					<p>
-						<strong>Health</strong>
-					</p>
-				</td>
-				<td width="35" valign="top">
-				</td>
-				<td width="128" colspan="2" valign="top">
-					<p>
-						<strong>Safety &amp; Security</strong>
-					</p>
-				</td>
-				<td width="43" valign="top">
-				</td>
-			</tr>
-			<tr>
-				<td width="99" colspan="3" valign="top">
-					<p>
-						<strong>Behavior / Conduct</strong>
-					</p>
-				</td>
-				<td width="35" valign="top">
-				</td>
-				<td width="99" colspan="5" valign="top">
-					<p>
-						<strong>Misinformation</strong>
-					</p>
-				</td>
-				<td width="35" valign="top">
-				</td>
-				<td width="128" colspan="2" valign="top">
-					<p>
-						<strong>Recruitment</strong>
-					</p>
-				</td>
-				<td width="43" valign="top">
-				</td>
-			</tr>
-			<tr>
-				<td width="99" colspan="3" valign="top">
-					<p>
-						<strong>Other (describe)</strong>
-					</p>
-				</td>
-				<td width="35" valign="top">
-				</td>
-				<td width="305" colspan="9" valign="top">
-				</td>
+				</td>	
+				<td width="440" colspan="13" valign="top">
+					{{ form.grievance_category }}
+				</td>			
 			</tr>
 			<tr>
 				<td width="99">
