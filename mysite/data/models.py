@@ -25,6 +25,10 @@ entities = (
 	('Other', 'Other'),
 )
 
+class JQueryUIDatepickerWidget(forms.DateInput):
+    def __init__(self, **kwargs):
+        super(forms.DateInput, self).__init__(attrs={"size":10, "class": "dateinput"}, **kwargs)
+
 class AMA1(models.Model):
 	grievance_received_by = models.TextField(null=True, blank=True)
 	date_of_recording = forms.DateField(required=False, widget=JQueryUIDatepickerWidget)
@@ -60,6 +64,3 @@ class AMA1Form(ModelForm):
 		model = AMA1
 		exclude = ['data_created_date']
 
-class JQueryUIDatepickerWidget(forms.DateInput):
-    def __init__(self, **kwargs):
-        super(forms.DateInput, self).__init__(attrs={"size":10, "class": "dateinput"}, **kwargs)
