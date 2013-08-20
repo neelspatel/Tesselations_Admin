@@ -9,8 +9,6 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'mysite.views.home', name='home'),
     url(r'^data/', include('data.urls')),
-    url(r'^create/', dataviews.create, name = 'create'),
-    url(r'^new/', dataviews.new, name = 'new'),    
     url(r'^admin/', include(admin.site.urls)),
 #    url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root', settings.STATIC_ROOT} ),
 )

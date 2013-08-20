@@ -2,9 +2,6 @@
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.http import Http404
-from data.models import Data
-from data.models import Snapshot
-from data.models import DataForm
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 import simplejson
