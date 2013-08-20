@@ -1,0 +1,183 @@
+body{
+	font-family:'Lato';	
+	background-color: rgba(173,216,230, 0.5);
+	background: url("../img/low_contrast_linen.png") repeat fixed;	
+
+}
+
+.navbar-inner{
+	background: url("../img/retina_dust.png") repeat fixed;	
+	border-radius: 5px;
+}
+
+.navbar-fixed-bottom{
+	background-color:rgb(38,38,38);
+	color:rgb(238,238,238);
+	padding-left:20px;
+}
+
+.tab-content, .hero-unit{
+	background-color: rgb(238,238,238);
+	background: url("../img/retina_dust.png") repeat fixed;	
+
+	border-radius: 5px;
+	padding:10px;
+}
+
+.nav-tabs>li>a {
+	color: rgb(238,238,238);
+}
+
+.nav-tabs>.active>a, .nav-tabs>.active>a:hover{
+	background-color: #123;
+	color: rgb(238,238,238);
+}
+
+.nav-tabs>li>a:hover {
+	background-color: rgba(37,37,37, 0.5);
+}
+
+.title{
+	padding:20px;
+}
+
+.hero-unit-home{	
+
+	text-shadow: white 0.05em 0.05em 0.05em;
+
+	padding: 20px;
+	border-style:solid;
+	border-width:2px;
+	box-shadow: 5px 5px 5px #888888;
+
+}
+
+.deleteRow, .playCurrent{
+	margin:0px;
+	margin-left:-2px;
+	padding:3px;
+}
+
+.expand {
+    height: 1em;
+    width: 50%;
+    padding: 3px;
+}
+
+.audiojs{
+	width:100%;	
+	height:75px;
+	background: #404040 !important;
+}
+
+.play-pause{		
+	height:75px !important;
+	background: #123 !important;
+
+}
+.play-pause:hover {
+	background-color: grey !important;
+	cursor: pointer;
+}
+
+.time{			
+	float:right !important;  
+	padding-top:20px !important;  
+	height:75px !important;
+	background: #123 !important;
+}
+
+.play, .pause, .loading, .error{
+	margin-top:20px !important;
+	height:20px !important;
+}
+
+.scrubber{
+	width:85% !important;
+	height:55px !important;
+	cursor: col-resize;
+}
+
+.scrubber#active {
+	cursor: col-resize;
+}
+
+.progress{
+	background: rgba(0,191,255,0.1) !important;
+	border-right:4px solid #ff0000;
+	height:55px !important;
+}
+
+.loaded{	
+	background-image: url("../img/nowaveformfound.jpg") !important;
+	background-size: 100% 100% !important;
+	height:55px !important;
+	cursor: col-resize;
+}
+
+#notRight{
+	padding-right: 20px;
+	border-right: 1px solid #333;
+	height:100%;
+}
+
+#mp3{
+	margin-top: 10px;
+}
+
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
+
+hr.symbol {
+    padding: 0;
+    margin-top:-10px;        
+    color:#555;        
+    text-align: center;   
+    height:1px; 
+	border-top: 1px solid #eeeeee;
+	border-bottom: 1px solid #ffffff;
+}
+hr.symbol:after {
+    content: "-~-";
+    text-shadow:0 -1px 1px rgba(0,0,0,0.5);
+    display: inline-block;
+    position: relative;
+    top: -0.7em;
+    font-size: 1em;
+    padding: 0 0.25em;
+    background: rgba(245,245,245, 0.5);
+}
+
+.labelAndDropdown{
+	height:40px;
+}
+
+
+.dropdown{
+	margin-top:3px;
+	margin-bottom:2px;	
+	width: 150px;
+	float:right;
+}
+
+.smalldropdown{
+	margin-top:3px;
+	margin-bottom:2px;	
+	width: 100px;
+	float:right;
+}
+
+
+.h3{
+	padding-top:-10px;
+	margin-top:-10px;
+}
+
+.scrollTable{
+	margin-top:10px;
+	max-height:400px;
+	overflow-y:scroll;
+}
+
+

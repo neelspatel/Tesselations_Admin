@@ -1,0 +1,1845 @@
+<!doctype html>
+<html>
+<head>
+	{% load staticfiles %}
+
+	<title>CMS Version 1.0</title>
+
+	<meta name="description" content="Version 1.0 of a web-based call monitoring system.">
+	<meta name="author" content="Neel Patel">
+	 
+	<link rel="shortcut icon" href="img/favicon.ico">
+
+	<link href='http://fonts.googleapis.com/css?family=Lato:300,300italic,700,900|Cabin:400,600,700' rel='stylesheet' type='text/css'>
+
+	<!-- Use the online CDN versions of files, but include local versions for offline development -->
+	<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery.ui.js"></script>
+	<script src="js/base64.js"></script>
+
+
+	<!-- both versions for local and server -->
+	<script src="audiojs/audio.min.js"></script>
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<link href="css/custom.css" rel="stylesheet" />
+	<script src="js/bootstrap.min.js"></script>
+
+	<script src="{% static 'data/audiojs/audio.min.js' %}"></script>
+	<link href="{% static 'data/css/bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'data/css/custom.css' %}" rel="stylesheet" />
+	<script src="{% static 'data/js/bootstrap.min.js' %}"></script>
+
+	<script>
+		//global variables
+		//NOTE - project name cannot contain characters other than A-Z and spaces
+		var thisProject = "Test Project";
+		var thisAnalyst = "Test Agent from Server";
+
+		function formatTime(time){
+	    	var whole = Math.floor(time);
+	    	//var part = time - whole;
+	    	//var truncated = Math.floor(part*100)/100;
+
+	    	var minutes = Math.floor(whole/60);
+	    	var seconds = Math.floor(whole%60);
+
+	    	if(seconds < 10) {
+	    		seconds = "0" + seconds; 
+	    	}
+
+	    	return minutes + ":" + seconds;
+		};
+
+		function urlExists(url)
+		{
+		    var http = new XMLHttpRequest();
+		    http.open('HEAD', url, false);
+		    http.send();
+		    return http.status!=404;
+		}
+
+		//replaces all instances of an old string with a new string
+		function replaceAll(string, oldstring, newstring){
+			var result = string.replace(oldstring, newstring);
+			if (result == string)
+			{
+				return result;
+			}
+			else
+			{
+				return replaceAll(result, oldstring, newstring);
+			}
+		}
+
+		//modifies the html so it reflects current values
+		function buildData() {
+			//updates each input element so the value is refelected in the html
+			$("input").each(function(){		
+				$(this).attr("checked", this.checked);
+			});
+			$("textarea").each(function(){
+			    $(this).attr("value", $(this).val());
+			    $(this).html($(this).val());
+			});
+			$("select").each(function(){				
+			    $(this).attr("value", $(this).val());	
+			  	$(this).html(preselectDropdown($(this), $(this).val()));
+			});
+
+			//gets the html for the tabs content
+		    var txtData = $(".tab-content").html();		    
+		    return txtData;
+		};
+
+		//clears all of the stored data
+		function clearData() {
+			//clears the old tag and phase markers
+			$('#tags tr').not('thead tr').remove();
+			$('#phases tr').not('thead tr').remove();
+
+			//clears all textareas
+			$(".tab-content").find('textarea').each(function(){
+			    $(this).attr("value", "");
+			    $(this).html("");
+			});
+
+			//selects the first element for each dropdown
+			$(".tab-content").find('.dropdown').each(function(){
+				$(this).html(preselectDropdown($(this), $($(this).find('option')[0]).val()));
+			});
+
+			//now adds in the first phase
+			$("#addPhase").click();
+			$($("#phases").find('textarea')[1]).val("Call opening");
+
+		}
+
+		//from the html, parses out the tags, phases, chars in plaintext
+		function parseData() {
+			//header
+			var tags = "CallName,Analyst,Project,Time,Label,Note,Check1\n";
+			//loops through each tag in the tags table (filtered so the header row isn't included)
+
+			//
+			var currentFileName = getFileName(document.getElementById('track').src);
+
+			$('#tags tr').filter('.info').each(function() {
+				var count = 0;	
+				//starts the string with call, agent, and project
+				var string = currentFileName + "," + thisAnalyst + "," + thisProject + ",";			
+			    $.each(this.cells, function(){
+			    	//ignore play button
+			    	if(count == 0)
+			        {
+			        	count = count + 1;			        				        	
+			        }
+			        //gets the time
+			        else if(count == 1)
+			        {
+			        	count = count + 1;			        	
+			        	string += $(this).find('textarea').val();
+			        }
+			        //gets the dropdown value
+			        else if(count == 2)
+			        {
+			        	count = count + 1;
+			        	string += ',"';
+			        	//gets the value and replaces the double quotes with single quotes, so that everything can be enclosed in quotes
+			        	string += replaceAll($(this).find('select').val(), '"', "'");
+			        	string += '"';
+
+			        }
+			        //gets the note
+			        else if(count == 3)
+			        {
+			        	count = count + 1;
+			        	string += ',"'
+			        	string += replaceAll($(this).find('textarea').val(), '"', "'");
+			        	string += '"';
+			        	
+			        }
+			        //gets checkbox one
+			        else if(count == 4)
+			        {
+			        	count = count + 1;
+			        	string += ","
+			        	if($(this).find('input').attr('checked'))
+			        	{
+			        		string += "true";
+			        	}
+			        	else
+			        	{
+			        		string += "false";
+			        	}
+			        	
+			        }			        		        
+			    });
+			    
+				tags += string;
+				tags += "\n";
+			});
+			console.log(tags);
+
+			//header
+			var phases = "CallName,Analyst,Project,Time,Label,Note,Check1\n";
+			//loops through each phase in the phases table (filtered so the header row isn't included)
+			$('#phases tr').filter('.success').each(function() {
+				var count = 0;	
+				var string = currentFileName + "," + thisAnalyst + "," + thisProject + ",";			
+			    $.each(this.cells, function(){
+			    	//ignores play
+			    	if(count == 0)
+			        {
+			        	count = count + 1;			        	
+			        }
+			        //gets the time
+			        else if(count == 1)
+			        {
+			        	count = count + 1;			        	
+			        	string += $(this).find('textarea').val();
+			        }
+			        //gets the dropdown value
+			        else if(count == 2)
+			        {
+			        	count = count + 1;
+			        	string += ',"';
+			        	//gets the value and replaces the double quotes with single quotes, so that everything can be enclosed in quotes
+			        	string += replaceAll($(this).find('select').val(), '"', "'");
+			        	string += '"';
+			        }
+			        //gets the note value
+			        else if(count == 3)
+			        {
+			        	count = count + 1;
+			        	string += ',"';
+			        	string += replaceAll($(this).find('textarea').val(), '"', "'");		
+			        	string += '"';	        	
+			        }
+			        //gets checkbox one
+			        else if(count == 4)
+			        {
+			        	count = count + 1;
+			        	string += ","
+			        	if($(this).find('input').attr('checked'))
+			        	{
+			        		string += "true";
+			        	}
+			        	else
+			        	{
+			        		string += "false";
+			        	}			        	
+			        }			        		       
+			    });
+			    
+				phases += string;
+				phases += "\n";
+			});
+			console.log(phases);
+
+			//now gets all of the characteristics from each dropdown menu
+			var header = "CallName,Analyst,Project,HandleTime,";
+			var characteristics = currentFileName + "," + thisAnalyst + "," + thisProject + "," + as[0].duration + ",";
+			$('#call tr, #customer tr, #agent tr').each(function() {
+				var count = 0;	
+		
+			    $.each(this.cells, function(){
+			        //gets the label value
+			        if(count == 0)
+			        {
+			        	count = count + 1;			        	
+			        	header += $(this).text();
+			        	header += ",";			        	
+			        }
+			        //gets the dropdown value
+			        else if(count == 1)
+			        {
+			        	count = count + 1;				        			        	
+			        	characteristics += $(this).find('select').val();
+			        	characteristics += ",";
+			        }			        		        		      
+			    });
+			    
+			});
+			//strips off the last comma
+			//header = header.substring(0, header.lastIndexOf(","));
+			//characteristics = characteristics.substring(0, characteristics.lastIndexOf(","));
+
+			//adds the observer notes, enclosed in double quotes
+			header += "ObserverNotes";
+			characteristics += '"';
+			characteristics += replaceAll($("#observer").find('textarea').val(), '"', "'");
+			characteristics += '"';
+
+			//combines the header and the data rows
+			characteristics = header + "\n" + characteristics;
+			console.log(characteristics);
+
+			var data = {"tags": tags, "phases": phases, "characteristics": characteristics};
+			return data;
+		};
+
+		//creates a new dropdown menu (in just html, not as an object) with a preselected value
+		function preselectDropdown(dropdown, value){			
+		    //var newDropdown = "<select> ";		    
+		    var newDropdown = "";
+
+			dropdown.find('option').each(function(i) 
+			{				
+				if($(this).val() == value)
+				{
+					newDropdown += "<option value = '" + this.value + "' selected>";
+				}
+				else
+				{
+					newDropdown += "<option value = '" + this.value + "'>";
+				}
+				newDropdown += this.text + "</option>";
+			});
+			//newDropdown += "</select> ";			
+			return newDropdown;
+		};
+
+		//saves the data for the current call in localstorage
+		function saveDataLocally(event){						      
+	        //saves in localStorage
+	        var txtData = buildData();		    
+	        var file = document.getElementById('track').src;
+
+	        //tries to save it in localstorage
+	        try 
+	        {
+	        	localStorage.setItem(file, txtData);
+			} 
+			catch (e) 
+			{
+			 	 if (e == QUOTA_EXCEEDED_ERR) {
+			 	 	 alert("Sorry, you've run out of local storage space! Export your data and clear it before continuing."); //data wasn't successfully saved due to quota exceed so throw an error
+				}
+			}
+	        localStorage.setItem(file, txtData);
+			setTimeout(saveDataLocally, 60000);
+	    };		
+
+	    //saves the data on the server side via a post request
+	    function saveDataServer(event){	
+    	            	
+			var txtData = buildData();	
+			var parsed = parseData();	    
+	        var file = document.getElementById('track').src;
+	        file = replaceAll(file, " ", "_");
+	        file = replaceAll(file, "%20", "_");
+
+
+        	var value = getFileName(file);
+        	value = thisProject + " " + value;
+        	value = replaceAll(value, " ", "_");
+
+			//dynamically fill in the form elements
+	        $('input#id_call').val(value);
+	        $('input#id_project').val(thisProject);
+	        $('input#id_agent').val(thisAnalyst);
+	        $('input#id_value').val(txtData);
+	        $('input#id_tags').val(parsed.tags);
+	        $('input#id_phases').val(parsed.phases);
+	        $('input#id_chars').val(parsed.characteristics);
+
+	        $.ajax( {
+			      type: "POST",
+			      url: $('#form').attr( 'action' ),
+			      data: $('#form').serialize(),
+			      complete: function( response ) {	
+			        console.log( response );					        
+			        var data = $.parseJSON(response['responseText']);
+			        
+		        	if (data != null)
+		        	{
+		        		$("#form").find("input[type=text], textarea").val("");
+				        var call = data[0]['pk'];
+				        var project = data[0]['fields']['project'];
+				        var value = data[0]['fields']['value'];
+				        var agent = data[0]['fields']['agent'];
+				        
+				        var summary = "Call: " + call + ". Agent: " + agent + ". Project: " + project + ". Value: " + value + "\n"
+				        
+				        markCall(getFileName(file) + getExtension(file), "complete");
+
+				        //remove the localstorage version
+				        //alert("Removing "+ file)	        		
+		        		clearTimeout(saveDataLocally);
+		        		localStorage.removeItem(file);
+		        	}
+		        	else
+		        	{		
+		        		markCall(getFileName(file) + getExtension(file), "error");        	
+
+	        			alert("Sorry, the data for " + getFileName(file) + " could not be saved on the server right now. \nPlease confirm that you're connected to the internet.\n\nThe data will be saved locally, so you can go back to " + getFileName(file) + " and try saving on the server again later.\n\nIf you are connected to the internet but are still recieving this error, please email sanjay@datanautix.com and we'll fix this as soon as possible!");
+		        	}
+			        return false;        
+			      }			      
+			    } );			
+	    };	
+
+		function loadData(event){
+	        //if the local storage version exists, set the existing HTML to that		        
+	        var file = document.getElementById('track').src;
+	        console.log("Getting data for " + file);
+	        var innerHTML = localStorage.getItem(file);
+	        if(innerHTML)
+	        {	        	
+	        	console.log("Getting data for " + file + " in localstorage.");
+	        	$(".tab-content").html(innerHTML);	        	
+        	}
+        	else //if we could not find it in localstorage, load from server
+        	{      
+        		console.log("Getting data for " + file + " in server.");      	
+        		var value = replaceAll(file, " ", "_");
+        		value = replaceAll(file, "%20", "_");
+        		value = getFileName(value);
+        		value = thisProject + " " + value;
+        		value = replaceAll(value, " ", "_");
+        		console.log("Looking for call " + value);
+        		//alert(value);''
+        		
+        		$.ajax( {		  	   
+			      url: "http://ec2-54-214-195-84.us-west-2.compute.amazonaws.com/data/" + value + "/"
+			  	  }).success( function( response, status ) {					  	  	
+		  	  		console.log("Status is : " + status);      	
+			        console.log( response );	
+			        var data = $.parseJSON(response);
+			        var value = data[0]['fields']['value'];			        
+			        $(".tab-content").html(value);
+
+			        //removes the old active tab content
+		        	$(".tab-pane").filter(".active").removeClass("active");
+		        	$(".tab-pane").filter("#tagging").addClass("active");
+
+		        	//removes the old active tab
+		        	$(".nav-tabs").find(".active").removeClass("active");
+		        	//$(".nav-tabs").find("#tagging").addClass("active");
+		        	$(".nav-tabs li:first").addClass("active"); })
+
+			  	  .error(function() {				  	  	
+			  	  		console.log("No server data found");
+			  	  		clearData();				  	  	
+			  	  });	  
+				     		
+        	}
+
+        	//removes the old active tab content
+        	$(".tab-pane").filter(".active").removeClass("active");
+        	$(".tab-pane").filter("#tagging").addClass("active");
+
+        	//removes the old active tab
+        	$(".nav-tabs").find(".active").removeClass("active");
+        	//$(".nav-tabs").find("#tagging").addClass("active");
+        	$(".nav-tabs li:first").addClass("active");
+	    };	  
+
+	    function getExtension(name){
+	    	return name.substring(name.lastIndexOf("."), name.length);
+	    };
+
+	    function removeExtension(name){
+	    	return name.substring(0, name.lastIndexOf("."));
+	    };
+
+	    function getFileName(file){
+	    	var current = file;
+	    	//if the last character is a slash, remove it
+	    	if (current.substring(current.length - 1, current.length) == "/")
+	    	{
+	    		current = current.substring(0, current.length - 1);
+	    	}
+	    	current = current.substring(current.lastIndexOf("/") + 1, current.length);
+	    	return removeExtension(current);
+	    }
+
+	    function loadCalls(files){
+	    	$('#selectCalls').modal("hide");	
+	    	
+	    	//clears the old dropdown list
+	    	$('#mp3').html("");
+	    	
+	    	//save calls in the page's dropdown
+	    	for (var i=0;i<files.length;i++)
+			{ 
+				//alert("Name: " + files[i].name);
+				var name = files[i].name;
+				var extension = getExtension(name);
+
+				//if it's a valid file, add it in to the list
+				if(extension == ".mp3" || extension == ".wav")
+				{					 
+			    	$('#mp3')
+			          .append($('<option>', { name : name })
+			          .text(name)); 
+	          	}
+
+			}	    	    		
+
+    		//save them in localstorage somehow    		
+    		try {
+	        	localStorage.setItem(thisProject + "fileList", $('#mp3').html());
+			} catch (e) {
+			 	 if (e == QUOTA_EXCEEDED_ERR) {
+			 	 	 alert("Sorry, you've run out of local storage space! Export your data and clear it before continuing."); //data wasn't successfully saved due to quota exceed so throw an error
+				}
+			}
+
+    		//set the audio source to the first one    		
+			var name = $("#mp3 option:first").val();			
+			var mp3Name = name;
+			var waveformName = removeExtension(name) + "-waveform.jpg";			
+
+			//loads in the new mp3				
+			$('#track').attr('src', "mp3/" + mp3Name);	
+			as = audiojs.createAll();	
+
+			//loads in the old correct form
+			loadData();
+
+					
+
+			if(document.URL.indexOf("file://") != -1)
+		    {
+		    	//removes any old residual styling from the css background image
+				$('.loaded').css("background-image", "");
+
+				//changes the waveform
+				var newCSS = "background-image: url('img/" + waveformName + "') !important; ";
+				$('.loaded').attr('style', function(i,s) { return s + newCSS });	
+			}						
+
+	    } 	
+
+	    //marks a call as "complete" or "unsaved"
+	    function markCall(callname, status) {
+	    	//deals with the space error
+	    	callname = replaceAll(callname, "%20", " ");
+
+	    	console.log("Callname is " + callname);
+	    	//first edits the dropdown list itself
+	    	var newDropdown = "";
+
+			$("#mp3").find('option').each(function(i) 
+			{		
+				console.log($(this).val());		
+				if($(this).val() == callname)
+				{
+					var oldval = $(this).val();
+					
+					var text = this.text;
+					console.log(text);
+
+					//removes the previous label from the text
+					var completedPosition = text.indexOf("Completed - ");
+					if(completedPosition != -1)
+					{
+						text = text.substring(completedPosition+("Completed - ").length, text.length);
+						console.log(text);
+					}
+					var unsavedPosition = text.indexOf("Unsaved - ");
+					if(unsavedPosition != -1)
+					{
+						text = text.substring(unsavedPosition+("Unsaved - ").length, text.length);
+						console.log(text);
+					}
+
+					if(status == "complete")
+					{
+						$(this).text("Completed - " + text);
+						$(this).val(oldval);
+					}
+					else
+					{
+						$(this).text("Unsaved - " + text);
+						$(this).val(oldval);
+					}					
+				}							
+			});
+			
+	    	//then saves the dropdown in localstorage
+	    	try {
+	        	localStorage.setItem(thisProject + "fileList", $('#mp3').html());
+			} catch (e) {
+			 	 if (e == QUOTA_EXCEEDED_ERR) {			 	 	
+				}
+			}
+	    }    
+
+		$(document).ready( function(){	
+			audiojs.events.ready(function() {
+		    	var as = audiojs.createAll();
+		  	});
+
+			//sets the download data url
+			$("#downloadData").attr("href", "http://ec2-54-214-195-84.us-west-2.compute.amazonaws.com/data/getcsv/" + replaceAll(thisProject, " ", "_") + "/");
+
+			//default dropdown for tag and phase creation				
+			var tagDropdown = "<select style = 'width: 90%;'><option value='first'>First option</option><option value='second'>Second option</option></select>";
+
+			var phaseDropdown = "<select style = 'width: 90%;'><option value='first'>First option</option><option value='second'>Second option</option></select>";			
+
+			//binds events to load and save data
+			$("#loadData").click(loadData);
+			$("#saveData").click(saveDataServer);
+
+			$('#form').submit( function() {
+			    $.ajax( {
+			      type: "POST",
+			      url: $('#form').attr( 'action' ),
+			      data: $('#form').serialize(),
+			      complete: function( response ) {	      	
+			        console.log( response );	
+			        $("#form").find("input[type=text], textarea").val("");
+			        var data = $.parseJSON(response['responseText']);
+			        var call = data[0]['pk'];
+			        var project = data[0]['fields']['project'];
+			        var value = data[0]['fields']['value'];
+			        var agent = data[0]['fields']['agent'];
+			        
+			        var summary = "Call: " + call + ". Agent: " + agent + ". Project: " + project + ". Value: " + value + "\n"
+
+			        return false;        
+			      }
+			    } );
+
+			    
+			    return false;
+			  });
+
+			//this function exports the data by saving it in a txt file for download
+		    $("#exportData").click(function(event){	        
+		        //saves in localStorage
+		        try {
+		        	localStorage.setItem(file, txtData);
+				} catch (e) {				 	 
+				}				
+
+				if(window.confirm("Are you sure you want to export and clear? \nThis will save the data as a text file, but will remove it from this program.")) {
+	            	alert("in production, this would clear local storage");
+
+	            	//writes to the text file
+					var txtData = buildData();		    
+			        var file = document.getElementById('track').src;
+			        $(this).attr('download','CMS_Data' + file + '.txt')
+			            .attr('href',"data:application/octet-stream;base64,"+base64.encode(txtData));
+
+		            //saves the file dropdown
+		            //var fileList = localStorage.getItem("fileList");
+
+		            //clears localstorage
+		            //localStorage.clear();
+
+		            //resets the fileList
+		            //localStorage.setItem("fileList", fileList);
+			        
+	            }
+            	else {            		
+            		alert("in production, this would do nothing.");
+            	}
+		        
+		    });
+
+		    //this function imports a new set of calls
+		    $("#importCalls").click(function(event){	
+		    	$('#selectCalls').modal({show: true, backdrop: 'static', keyboard: false});	
+	    	});
+
+		    //binds the addTag button to the event
+		    $('.tab-content').on('click', '#addTag', function(){
+		    //$("#addTag").click(function(){					
+		    	//pauses current track
+		    	as[0].pause();
+
+		    	//adds the play button
+		    	var value = "<tr class = 'info'> <td> <button type='button' class = 'btn btn-primary playCurrent' ><i class='icon-play icon-white'></i></button>" + "</td> ";
+
+		        //adds the time as the second element
+		        value += "<td> <b> <textarea rows='1' style = 'width:80%;'>" + formatTime(document.getElementById('track').currentTime) + "</textarea> </b> </td>";
+		        
+		        //adds the dropdown as the second element
+		        value += "<td>" + tagDropdown +  "</td>";
+
+		        //adds the notes as the third element
+		        value += "<td>" + "<textarea rows='1' style = 'width:95%;' onfocus='this.rows=5;' onblur='this.rows=1;' style='resize: none;' placeholder = 'Add tag info...'>" + "</textarea>" + "</td>";
+		        
+		        //adds the feedback checkbox
+		        value += "<td>" + "<input type = 'checkbox'>" + "</td>";		
+
+		        value += "<td>" + "<button type='button' class = 'btn btn-danger deleteRow' ><i class='icon-trash'></i></button>" + "</td> </tr>";
+
+ 		        //appends the string so far to the page
+ 		        if ($('#tags tr').length == 1)
+ 		        {
+ 		        	$("#tags").append(value); 		        	
+ 		        }
+ 		        else
+ 		        {
+ 		        	$("#tags tbody").prepend(value);
+ 		        }
+		        
+
+		        //var deleteButton = $();
+
+		        //appends the delete button to the page
+		        //$("#tags tr:first").append('<td> </td> </tr>').find("td:last").append(deleteButton);			        	
+		    });
+
+			//binds the addPhase button to the event
+			$('.tab-content').on('click', '#addPhase', function(){
+		    //$("#addPhase").click(function(){
+		    	//adds the play button
+		    	var value = "<tr class = 'success'> <td> <button type='button' class = 'btn btn-primary playCurrent' ><i class='icon-play icon-white'></i></button>" + "</td> ";
+
+		        //adds the time as the second element
+		        value += "<td> <b> <textarea rows='1' style = 'width:80%;'>" + formatTime(document.getElementById('track').currentTime) + "</textarea> </b> </td>";
+		        
+		        //adds the dropdown as the second element
+		        value += "<td>" + phaseDropdown +  "</td>";
+
+		        //adds the notes as the third element
+		        value += "<td>" + "<textarea rows='1' style = 'width:95%;' onfocus='this.rows=5;' onblur='this.rows=1;' style='resize: none;' placeholder = 'Add phase info...'>" + "</textarea>" + "</td>";     
+
+		        //adds the suggest checkbox
+		        value += "<td>" + "<input type = 'checkbox'>" + "</td>";   
+
+		        //adds the delete button
+		        value += "<td>" + "<button type='button' class = 'btn btn-danger deleteRow' ><i class='icon-trash'></i></button>" + "</td> </tr>";
+
+ 		        //appends the string so far to the page
+		        if ($('#phases tr').length == 1) //if there is only the header row, add it in normally
+ 		        { 		        	
+ 		        	$("#phases").append(value); 		        	
+ 		        }
+ 		        else //otherwise, add it in the beginning
+ 		        { 		        	
+ 		        	$("#phases tbody").prepend(value);
+ 		        }
+				
+		    });
+
+			//binds the deleteRow button to the event
+			$('.tab-content').on('click', '.deleteRow', function(){
+	        	var oldClass = $(this).closest('tr').attr("class");		        	
+	        	$(this).closest('tr').attr('class', 'error');
+	        	if(window.confirm("Are you sure you want to delete this row?")) {
+	            	$(this).closest('tr').remove();}
+	            else {
+	            	$(this).closest('tr').attr('class', oldClass);
+	            }
+	        });
+
+	        //binds the playCurrent button to the event
+			$('.tab-content').on('click', '.playCurrent', function(){
+	        	var row = $(this).closest('tr');		
+	        	var time = row.find('td:eq(1)').find('textarea').val();
+	        	var min = time.substring(0,time.indexOf(":"));	        	
+	        	var sec = time.substring(time.indexOf(":")+1, time.length);	        	
+	        	var timeInt = parseInt(min)*60 + parseInt(sec);
+	        	
+	        	//pauses the player
+	        	as[0].pause();
+	        	//gets the timeto set it to
+	        	//sets it to that time
+	        	as[0].element.currentTime = timeInt;
+	        	//plays the player
+	        	as[0].play();
+
+	        });
+
+		    //action upon selecting a different mp3 from the list
+		    $("#mp3").change(function(){	
+		    	//pauses current track
+		    	as[0].pause();
+
+		    	//saves the old data first
+		    	if(window.confirm("Are you sure you want to save these changes?")) 
+	    		{	
+		    		saveDataServer();
+		    	}
+		    	//otherwise deletes from localstorage
+		    	else {
+		    		localStorage.removeItem(document.getElementById('track').src);
+		    	}
+
+				var name = $(this).val();
+				var mp3Name = name;
+				var waveformName = removeExtension(name) + "-waveform.jpg";				
+
+				//loads in the new mp3		
+				// if we're on the server
+		        if(document.URL.indexOf("file://") == -1)		
+		        {
+		        	console.log("Loading mp3 " + mp3Name);
+		        	$('#track').attr('src', mp3Name);	
+		        }
+		        else
+		        {
+					$('#track').attr('src', "mp3/" + mp3Name);	
+		        }
+				
+				as = audiojs.createAll();	
+
+				//loads in the old correct form
+				loadData();
+
+				
+
+				//uncomment this to retry the waveform stuff
+
+				// if we're not on the server
+		        if(document.URL.indexOf("file://") != -1)
+		        {
+		        	//removes any old residual styling from the css background image
+					$('.loaded').css("background-image", "");
+
+					//changes the waveform
+					var newCSS = "background-image: url('img/" + waveformName + "') !important; ";
+					$('.loaded').attr('style', function(i,s) { return s + newCSS });	
+				}								
+
+				//starts saving locally again
+				setTimeout(saveDataLocally, 60000);
+		    });
+		    
+		    //instantiates the modal for login
+		    $('#myModal').modal({show: true, backdrop: 'static', keyboard: false});	
+
+		    //sets focus on login
+			setTimeout( function() { $( '#name' ).focus() }, 500 );
+
+		    //binds the event to handle login authentication
+		    $("#login").click(function(){
+		    	//gets name value
+		    	var name = $("#name").val();		    	
+		    	
+		    	if (name != ""){
+		    		thisAnalyst = name;
+
+		    		$('#myModal').modal("hide");	
+
+		    		//tries to get the list of files from localstorage; otherwise, loads them via user select
+		    		var innerHTML = localStorage.getItem(thisProject + "fileList");
+		    		//if we're on the server
+		        	if(document.URL.indexOf("file://") == -1)
+		        	{
+		        		//$("#mp3").html(preselectDropdown($("#mp3"), $("#mp3 option:first").val()));
+			        	//set the audio source to the first one    		
+						var name = $("#mp3 option:first").val();			
+						var mp3Name = name;
+						var waveformName = name + "-waveform.jpg";	
+
+						//creates the audiojs element
+		    			$(".title").html('<audio src="' + mp3Name + '" preload="auto" id = "track" css = "css/custom.css"></audio>');				
+
+						//loads in the new mp3	
+						console.log("Loading mp3 " + mp3Name);			
+						$('#track').attr('src', mp3Name);	
+						as = audiojs.createAll();	
+
+						//loads in the old correct form
+						loadData();		
+		        	}
+			        else if(innerHTML)
+			        {	        	
+			        	$("#mp3").html(innerHTML);
+			        	$("#mp3").html(preselectDropdown($("#mp3"), $("#mp3 option:first").val()));
+			        	//set the audio source to the first one    		
+						var name = $("#mp3 option:first").val();			
+						var mp3Name = name;
+						var waveformName = name + "-waveform.jpg";	
+
+						//creates the audiojs element
+		    			$(".title").html('<audio src="mp3/' + mp3Name + '" preload="auto" id = "track" css = "css/custom.css"></audio>');				
+
+						//loads in the new mp3				
+						$('#track').attr('src', "mp3/" + mp3Name);	
+						as = audiojs.createAll();	
+
+						//loads in the old correct form
+						loadData();		        	
+		        	}
+		        	else
+		        	{       
+		        		//shows the modal to select calls
+		    			$('#selectCalls').modal({show: true, backdrop: 'static', keyboard: false});
+		        	}
+		    		
+		    		//now starts saving data
+		    		setTimeout(saveDataLocally, 60000);	    		
+		    	}
+		    	else{
+		    		$("#name").val("");		    		
+		    		$("#myModal").effect("shake", { times:3 }, 700);
+		    	}
+		    });		    
+		});	
+	</script>
+</head>
+
+<body>	
+	<div class="navbar">
+	  <div class="navbar-inner">
+	    <a class="brand" href="#">
+	    	<img src = "img/datanautix.jpg" style = "width: 25px;"></img>
+    	</a>	
+    	<a class="brand" href="#">
+	    	Datanautix Call Mapping System	 
+
+	    	<form action = "http://ec2-54-214-195-84.us-west-2.compute.amazonaws.com/create/" method="post" id = "form">    
+			    <table>		        
+			        <input id="id_call" name="call" type="hidden" />
+			        <input id="id_project" name="project" type="hidden" />
+			        <input id="id_agent" name="agent" type="hidden" />
+			        <input id="id_value" name="value" type="hidden" />
+			        <input id="id_tags" name="tags" type="hidden" />
+			        <input id="id_phases" name="phases" type="hidden" />
+			        <input id="id_chars" name="chars" type="hidden" />
+			    </table>		    
+			</form>    	    	
+	    </a>		    	   
+
+	    <ul class="nav pull-right">
+          	<span class = "navbar-text" style = "padding-right: 20px;">
+          		Select a call:  
+      		</span>          	
+          	<select id = "mp3">
+          		<div style = "display:none" id = "dropdownForDjango">
+          			{% for current in data %}
+					<option value="{{ current.url }}"> {{ current.name }}</option>
+					{% endfor %}
+					
+				</div>
+		   	</select>  
+		   	<span class = "navbar-text" style = "padding-left: 20px;">
+		    	<a href="javascript://import" id="importCalls"><i class="icon-download-alt" style = "padding-right:5px;"></i>Import New Calls</a>		    	
+      		</span>       	
+      		<span class = "navbar-text" style = "padding-left: 20px;">
+		    	<a href="javascript://save" id="saveData"><i class="icon-share" style = "padding-right:5px;"></i>Save on Server</a>		    	
+      		</span> 
+      		<span class = "navbar-text" style = "padding-left: 20px;">
+				<a id="downloadData"><i class="icon-download" style = "padding-right:5px;"></i>Download Data</a>	
+      		</span>       		
+
+
+        </ul>
+	      
+	  </div>
+	</div>
+
+	<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog">
+	  <div class="modal-header">
+	    <h3 id="myModalLabel">Datanautix Call Mapping System</h3>
+	  </div>	  
+	  <div class="modal-body">
+	    <p>Please enter your information to log in:</p>	  	    
+	    <input type="text" placeholder="Name" id = "name">
+	  </div>
+	  <div class="modal-footer">
+	    <button class="btn btn-primary" id = "login">Log in</button>
+	  </div>
+	</div>
+
+	<div id="selectCalls" class="modal hide fade" tabindex="-1" role="dialog">
+	  <div class="modal-header">
+	    <h3 id="myModalLabel">Datanautix Call Mapping System</h3>
+	  </div>	  
+	  <div class="modal-body">
+	    <p>Select a list of calls to get started. You can use 'ctrl+A' to select as many calls as you want.</p>	  	
+	    <p>However, all calls <b>must</b> be <b>in the 'mp3' directory within the CMS folder</b>.</p>
+	    <input type="file" id="input" multiple onchange="loadCalls(this.files)">    	    	
+	  </div>
+	  <div class="modal-footer">
+    	
+	  </div>
+	</div>
+	
+	<div class = "container" style = "margin-left: 50px; margin-right: 50px; width: auto; min-width: 1000px; max-width: 1500px;">
+
+		<div class = "hero-unit title">			
+		</div>
+
+		<div class="tabbable"> <!-- Only required for left/right tabs -->
+		  	<ul class="nav nav-tabs">
+		    	<li class="active"><a href="#tagging" data-toggle="tab">
+		    		<i class="icon-tags icon-white" style="margin-right:10px;" ></i>
+		    		Call Tagging
+		    	</a></li>
+		    	<li><a href="#call" data-toggle="tab">
+		    		<i class="icon-volume-up icon-white" style="margin-right:10px;" ></i>
+		    		Call Characteristics		    				    		
+		    	</a></li>
+		    	<li><a href="#customer" data-toggle="tab">
+		    		<i class="icon-user icon-white" style="margin-right:10px;" ></i>
+		    		Customer Characteristics
+		    	</a></li>
+		    	<li><a href="#agent" data-toggle="tab">
+		    		<i class="icon-font icon-white" style="margin-right:10px;" ></i>
+		    		Agent Characteristics
+		    	</a></li>
+		    	<li><a href="#observer" data-toggle="tab">
+		    		<i class="icon-eye-open icon-white" style="margin-right:10px;" ></i>
+		    		Observer Notes
+		    	</a></li>
+		  	</ul>
+		  	<div class="tab-content">
+		  		<div class = "tab-pane active" id = "tagging">
+			        <div class="row-fluid">
+			        	<div class = "span6" id = "notRight">
+			        		<button type="button" id = "addTag" class = "btn btn-info" style = "width: 100%;">
+			        			<i class="icon-tags icon-white" style = "margin-right:10px;"></i>
+			        			Add a new tag
+			        		</button>
+			        		<div class = "scrollTable">
+				        		<table class="table table-striped table-bordered" id = "tags" style = "margin-top:20px; table-layout:fixed;">
+				        			<col style="width:5%">
+									<col style="width:10%">
+							        <col style="width:20%">
+							        <col style="width:56%">
+							        <col style="width:4%">							
+							        <col style="width:5%">
+								     	
+									<thead> 
+										<tr>							    
+											<th><i class="icon-play"></i></th>        
+								            <th>Time</th>
+								            <th>Label</th>
+								            <th>Notes</th>		                     
+								            <th><i class="icon-share"></i></th>	
+								            <th><i class="icon-trash"></i></th>
+										</tr>
+									</thead>								
+								</table>
+							</div>
+			        	</div>
+			        	<div class = "span6"  id = "phaseSpan">
+			        		<button type="button" id = "addPhase" class = "btn btn-success" style = "width: 100%;">
+			        			<i class="icon-bullhorn icon-white" style = "margin-right:10px;"></i>
+			        			Add a new phase
+			        		</button>
+			        		<div class = "scrollTable">
+				        		<table class="table table-striped table-bordered" id = "phases" style = "margin-top:20px; table-layout:fixed;">
+				        			<col style="width:5%">
+									<col style="width:10%">
+							        <col style="width:20%">
+							        <col style="width:56%">
+							        <col style="width:4%">
+							        <col style="width:5%">
+								     	
+									<thead> 
+										<tr>							    
+											<th><i class="icon-play"></i></th> 
+								            <th>Time</th>
+								            <th>Label</th>
+								            <th>Notes</th>		
+								            <th><i class="icon-share"></i></th>	
+								            <th><i class="icon-trash"></i></th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+			        	</div>			        	
+					</div>					
+				</div>
+				<div class="tab-pane" id="call">
+					<div class="row-fluid">						 
+						<div class = "span4" id = "notRight"> 	
+							<h3>Basic Criteria</h3>
+							<hr class = 'symbol'>
+							<table>
+								<tr>
+									<td>Analyst:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Sanjay'>Sanjay</option>
+											<option value = ' Santhosh'> Santhosh</option>
+											<option value = ' Rebecca'> Rebecca</option>
+											<option value = ' Mike'> Mike</option>
+											<option value = ' Dave'> Dave</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Call ID:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Call 1'>Call 1</option>
+											<option value = ' Call 2'> Call 2</option>
+											<option value = ' Call 3'> Call 3</option>
+											<option value = ' Call 4'> Call 4</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Handle Time:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'sample'>sample</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Client:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'NAB'>NAB</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Monitoring Time:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'sample'>sample</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Agent Name:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Agent 1'>Agent 1</option>
+											<option value = ' Agent 2'> Agent 2</option>
+											<option value = ' Agent 3'> Agent 3</option>
+											<option value = ' Agent 4'> Agent 4</option>
+										</select>
+									</td>
+								</tr>
+							</table>						
+						   							   						   	
+						</div>
+						<div class = "span4" id = "notRight"> 	
+							<h3>Call Opening</h3>
+							<hr class = 'symbol'>
+							<table>
+								<tr>
+									<td>Non Pay Driver:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Sick'>Sick</option>
+											<option value = ' Forgot'> Forgot</option>
+											<option value = ' No Money'> No Money</option>
+											<option value = ' Other'> Other</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Secondary driver:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'In Hospital'>In Hospital</option>
+											<option value = ' Sick family member'> Sick family member</option>
+											<option value = ' Out of town'> Out of town</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Type of payment:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Cash'>Cash</option>
+											<option value = ' Check'> Check</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Amount owed:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'sample'>sample</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Contact details changed:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Multiple issues:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Proposal:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Negotiate:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Close:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+										</select>
+									</td>
+								</tr>
+							</table>
+							
+						</div>
+						<div class = "span4"> 	
+							<h3>Call Closing</h3>
+							<hr class = 'symbol'>
+							<table>
+								<tr>
+									<td>Final Outcome:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'CTP'>CTP</option>
+											<option value = ' No CTP'> No CTP</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Prob cust will make pmt:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = '1'>1</option>
+											<option value = '2'>2</option>
+											<option value = '3'>3</option>
+											<option value = '4'>4</option>
+											<option value = '5'>5</option>
+											<option value = '6'>6</option>
+											<option value = '7'>7</option>
+											<option value = '8'>8</option>
+											<option value = '9'>9</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Avoidable call:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+											<option value = ' Maybe'> Maybe</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Pmt initiated by:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Cust'>Cust</option>
+											<option value = ' Agent'> Agent</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Overall Call Effectiveness:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = '1'>1</option>
+											<option value = '2'>2</option>
+											<option value = '3'>3</option>
+											<option value = '4'>4</option>
+											<option value = '5'>5</option>
+											<option value = '6'>6</option>
+											<option value = '7'>7</option>
+											<option value = '8'>8</option>
+											<option value = '9'>9</option>
+										</select>
+									</td>
+								</tr>
+							</table>	 
+						</div>
+					</div>
+			    </div>
+			    <div class="tab-pane" id="customer">	
+					<div class="row-fluid">						 
+						<div class = "span3"  id = "notRight"> 	
+							<h3>Demographics</h3>
+							<hr class = 'symbol'>
+							<table>
+								<tr>
+									<td>Cust Gender:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Male'>Male</option>
+											<option value = ' Female'> Female</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Multiple NAB accounts:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Age:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = '18-30'>18-30</option>
+											<option value = '30-50'>30-50</option>
+											<option value = '50+'>50+</option>
+										</select>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class = "span3"  id = "notRight"> 	
+							<h3>Customer Behavior</h3>
+							<hr class = 'symbol'>
+							<table>
+								<tr>
+									<td>Customer attitude beginning  :</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Angry'>Angry</option>
+											<option value = ' Upset'> Upset</option>
+											<option value = ' Neutral'> Neutral</option>
+											<option value = ' Positive'> Positive</option>
+											<option value = ' Happy'> Happy</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Customer attitude end  :</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Angry'>Angry</option>
+											<option value = ' Upset'> Upset</option>
+											<option value = ' Neutral'> Neutral</option>
+											<option value = ' Positive'> Positive</option>
+											<option value = ' Happy'> Happy</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Customer communication style:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Conversational'>Conversational</option>
+											<option value = ' Transactional'> Transactional</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Sense of urgency:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'High'>High</option>
+											<option value = ' Medium'> Medium</option>
+											<option value = ' Low'> Low</option>
+											<option value = ' None'> None</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Reaction to consequence stmt:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'None'>None</option>
+											<option value = ' Anger'> Anger</option>
+											<option value = ' Irritation'> Irritation</option>
+										</select>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class = "span3"  id = "notRight"> 	
+							<h3>Customer Experience </h3>
+							<hr class = 'symbol'>
+							<table>
+								<tr>
+									<td>Customer experience overall service :</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = '1'>1</option>
+											<option value = '2'>2</option>
+											<option value = '3'>3</option>
+											<option value = '4'>4</option>
+											<option value = '5'>5</option>
+											<option value = '6'>6</option>
+											<option value = '7'>7</option>
+											<option value = '8'>8</option>
+											<option value = '9'>9</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Customer experience agent:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = '1'>1</option>
+											<option value = '2'>2</option>
+											<option value = '3'>3</option>
+											<option value = '4'>4</option>
+											<option value = '5'>5</option>
+											<option value = '6'>6</option>
+											<option value = '7'>7</option>
+											<option value = '8'>8</option>
+											<option value = '9'>9</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Customer experience resolution:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = '1'>1</option>
+											<option value = '2'>2</option>
+											<option value = '3'>3</option>
+											<option value = '4'>4</option>
+											<option value = '5'>5</option>
+											<option value = '6'>6</option>
+											<option value = '7'>7</option>
+											<option value = '8'>8</option>
+											<option value = '9'>9</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Proxy CE:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = '1'>1</option>
+											<option value = '2'>2</option>
+											<option value = '3'>3</option>
+											<option value = '4'>4</option>
+											<option value = '5'>5</option>
+											<option value = '6'>6</option>
+											<option value = '7'>7</option>
+											<option value = '8'>8</option>
+											<option value = '9'>9</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Potential CE:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = '1'>1</option>
+											<option value = '2'>2</option>
+											<option value = '3'>3</option>
+											<option value = '4'>4</option>
+											<option value = '5'>5</option>
+											<option value = '6'>6</option>
+											<option value = '7'>7</option>
+											<option value = '8'>8</option>
+											<option value = '9'>9</option>
+										</select>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class = "span3"> 	
+							<h3>Customer Insights</h3>
+							<hr class = 'symbol'>
+							<table>
+								<tr>
+									<td>Online user:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Cust frustration level:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = '1'>1</option>
+											<option value = '2'>2</option>
+											<option value = '3'>3</option>
+											<option value = '4'>4</option>
+											<option value = '5'>5</option>
+											<option value = '6'>6</option>
+											<option value = '7'>7</option>
+											<option value = '8'>8</option>
+											<option value = '9'>9</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Unmet needs:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+										</select>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+			    </div>
+			    <div class="tab-pane" id="agent">	
+					<div class="row-fluid">						 
+						<div class = "span4"> 	
+							<h3>Agent Behavior</h3>
+							<hr class = 'symbol'>
+							<table>
+								<tr>
+									<td>Agent empathize :</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Y - Necessary'>Y - Necessary</option>
+											<option value = ' No - Necessary'> No - Necessary</option>
+											<option value = ' Y - Unnecessary'> Y - Unnecessary</option>
+											<option value = ' N - Unnecessary'> N - Unnecessary</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Agent apology:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Y - Necessary'>Y - Necessary</option>
+											<option value = ' No - Necessary'> No - Necessary</option>
+											<option value = ' Y - Unnecessary'> Y - Unnecessary</option>
+											<option value = ' N - Unnecessary'> N - Unnecessary</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Agent upsell skills:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = '1'>1</option>
+											<option value = '2'>2</option>
+											<option value = '3'>3</option>
+											<option value = '4'>4</option>
+											<option value = '5'>5</option>
+											<option value = '6'>6</option>
+											<option value = '7'>7</option>
+											<option value = '8'>8</option>
+											<option value = '9'>9</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Agent communication Style :</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Transactional'>Transactional</option>
+											<option value = ' Conversational'> Conversational</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Made cust feel important:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Sounded scripted:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Agent Gender:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Male'>Male</option>
+											<option value = ' Female'> Female</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Helpful to cust:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Enthusiasm:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = '1'>1</option>
+											<option value = '2'>2</option>
+											<option value = '3'>3</option>
+											<option value = '4'>4</option>
+											<option value = '5'>5</option>
+											<option value = '6'>6</option>
+											<option value = '7'>7</option>
+											<option value = '8'>8</option>
+											<option value = '9'>9</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Respect/professionalism:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = '1'>1</option>
+											<option value = '2'>2</option>
+											<option value = '3'>3</option>
+											<option value = '4'>4</option>
+											<option value = '5'>5</option>
+											<option value = '6'>6</option>
+											<option value = '7'>7</option>
+											<option value = '8'>8</option>
+											<option value = '9'>9</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Rushing the closing:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Rude with cust:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+										</select>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class = "span4"> 	
+							<h3> Agent Competencies</h3>
+							<hr class = 'symbol'>
+							<table>
+								<tr>
+									<td>Product knowledge:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = '1'>1</option>
+											<option value = '2'>2</option>
+											<option value = '3'>3</option>
+											<option value = '4'>4</option>
+											<option value = '5'>5</option>
+											<option value = '6'>6</option>
+											<option value = '7'>7</option>
+											<option value = '8'>8</option>
+											<option value = '9'>9</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Agent rapport building skills:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Good'>Good</option>
+											<option value = ' Needs Improvement'> Needs Improvement</option>
+											<option value = ' Poor'> Poor</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Educate cust:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Prob isolation skills:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = '1'>1</option>
+											<option value = '2'>2</option>
+											<option value = '3'>3</option>
+											<option value = '4'>4</option>
+											<option value = '5'>5</option>
+											<option value = '6'>6</option>
+											<option value = '7'>7</option>
+											<option value = '8'>8</option>
+											<option value = '9'>9</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Personalization skills:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = '1'>1</option>
+											<option value = '2'>2</option>
+											<option value = '3'>3</option>
+											<option value = '4'>4</option>
+											<option value = '5'>5</option>
+											<option value = '6'>6</option>
+											<option value = '7'>7</option>
+											<option value = '8'>8</option>
+											<option value = '10'>10</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Probing questions:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+											<option value = ' some'> some</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Use of defensive language:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Num of attempts to get agreement:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'sample'>sample</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Call control:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = '1'>1</option>
+											<option value = '2'>2</option>
+											<option value = '3'>3</option>
+											<option value = '4'>4</option>
+											<option value = '5'>5</option>
+											<option value = '6'>6</option>
+											<option value = '7'>7</option>
+											<option value = '8'>8</option>
+											<option value = '10'>10</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Missed opp to convert to earlier pmt:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+										</select>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class = "span4"> 	
+							<h3>Process Management</h3>
+							<hr class = 'symbol'>
+							<table>
+								<tr>
+									<td>Consequence stmts used:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Yes'>Yes</option>
+											<option value = ' No'> No</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Number of consequence stmts:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'sample'>sample</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Consequence stmt 1:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Credit Report'>Credit Report</option>
+											<option value = ' Late Fee'> Late Fee</option>
+											<option value = ' Cancel card'> Cancel card</option>
+											<option value = ' Interest'> Interest</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Consequence stmt 2:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Credit Report'>Credit Report</option>
+											<option value = ' Late Fee'> Late Fee</option>
+											<option value = ' Cancel card'> Cancel card</option>
+											<option value = ' Interest'> Interest</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Consequence stmt 3:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Credit Report'>Credit Report</option>
+											<option value = ' Late Fee'> Late Fee</option>
+											<option value = ' Cancel card'> Cancel card</option>
+											<option value = ' Interest'> Interest</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Consequence stmt 4:</td>
+									<td>
+										<select class = 'dropdown'>
+											<option value = 'Credit Report'>Credit Report</option>
+											<option value = ' Late Fee'> Late Fee</option>
+											<option value = ' Cancel card'> Cancel card</option>
+											<option value = ' Interest'> Interest</option>
+										</select>
+									</td>
+								</tr>			
+							</table>
+						</div>
+					</div>
+			    </div>
+			    <div class="tab-pane" id="observer">	
+					<textarea rows='5' style = 'width:95%;' onfocus='this.rows=15;' placeholder="Observer notes..."></textarea>
+			    </div>
+			</div>
+		</div>
+	</div>
+	<div class="navbar navbar-fixed-bottom">
+		&copy; <a href = "http://www.datanautix.com">Datanautix Inc.</a> 2006-2013. All Rights Reserved.
+	</div>
+
+
+</body>
+
