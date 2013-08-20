@@ -21,4 +21,8 @@ textarea {
             box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
 }
 
+tr {
+    height: 200px;
+    max-height: 300px;
+}
 
