@@ -3,7 +3,58 @@ from django.forms import ModelForm
 from datetime import datetime
 
 # Create your models here.
+grievance_categories = (
+    ('Compensation', 'Compensation'),
+    ('Land', 'Land'),
+    ('Accident/Damage', 'Accident/Damage'),
+    ('Environmental', 'Environmental'),
+    ('Health', 'Health'),
+    ('Safety/Security', 'Safety/Security'),
+    ('Behavior/Conduct', 'Behavior/Conduct'),
+    ('Misinformation', 'Misinformation'),
+    ('Recruitment', 'Recruitment'),
+    ('Other', 'Other'),    
+)
+
+entities = (
+	('Project', 'Project'),
+	('Contractor', 'Contractor'),
+	('Government', 'Government'),
+	('Other', 'Other'),
+)
 
 class AMA1(models.Model):
-	grievance_received_by = models.TextField()
-	
+	grievance_received_by = models.TextField(null=True, blank=True)
+	date_of_recording = models.DateField(null=True, blank=True)
+	name_and_id_of_person_with_grievance = models.TextField(null=True, blank=True)
+	contact_details = models.TextField(null=True, blank=True)
+	location = models.TextField(null=True, blank=True)
+	prod_zone = models.TextField(null=True, blank=True)
+	alleged_grievance = models.TextField(null=True, blank=True)
+	what_happened = models.TextField(null=True, blank=True)
+	when = models.TextField(null=True, blank=True)
+	where = models.TextField(null=True, blank=True)
+	who = models.TextField(null=True, blank=True)
+	observations = models.TextField(null=True, blank=True)
+	grievance_category = models.ChoiceField(grievance_categories, null=True, blank=True)
+	additional_documents = models.TextField(null=True, blank=True)
+	has_grievance_been_raised_before = models.TextField(null=True, blank=True)
+	proposed_solutions_according_to_complainer = models.TextField(null=True, blank=True)
+	entity_involved = models.ChoiceField(entities, null=True, blank=True)
+	name_of_supervisor = models.TextField(null=True, blank=True)
+	comments_from_contacted_person = models.TextField(null=True, blank=True)
+	follow_up_actions = models.TextField(null=True, blank=True)
+	response_details = models.TextField(null=True, blank=True)
+	grievance_resolution_responsibility = models.TextField(null=True, blank=True)
+	date_of_response = models.DateField(null=True, blank=True)
+	data_created_date = models.DateTimeField('Entry created:', null=True, blank=True)
+
+	def save(self):
+		self.data_created_date = datetime.now()
+		super(AMA1, self).save()
+
+class AMA1Form(ModelForm):
+	class Meta:
+		model = AMA1
+		exclude = ['data_created_date']
+
