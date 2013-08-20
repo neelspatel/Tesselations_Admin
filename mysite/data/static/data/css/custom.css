@@ -13,7 +13,7 @@ textarea {
     border: none;
     width: 90%;
     height: 90%;
-    margin: 0 auto;
+    margin: auto;
     display: block;
     -webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
        -moz-box-sizing: border-box; /* FF1+ */
