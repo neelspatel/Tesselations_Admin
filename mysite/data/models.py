@@ -27,7 +27,7 @@ entities = (
 
 class AMA1(models.Model):
 	grievance_received_by = models.TextField(null=True, blank=True)
-	date_of_recording = models.DateTimeField(null=True, blank=True)
+	date_of_recording = forms.DateField(required=False, widget=forms.DateInput(format = '%m/%d/%Y'))
 	name_and_id_of_person_with_grievance = models.TextField(null=True, blank=True)
 	contact_details = models.TextField(null=True, blank=True)
 	location = models.TextField(null=True, blank=True)
