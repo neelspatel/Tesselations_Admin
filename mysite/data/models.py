@@ -67,5 +67,5 @@ class AMA1(models.Model):
 class AMA1Form(ModelForm):
 	class Meta:
 		model = AMA1
-		exclude = ['data_created_date', 'has_existing_id']
+		exclude = ['data_created_date']
 
