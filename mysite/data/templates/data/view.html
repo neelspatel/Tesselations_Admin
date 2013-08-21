@@ -36,6 +36,7 @@
 		var notice;
 
 		function showLoading() {
+			hideNotification();
 			notice = $.pnotify({
 		        title: "Loading...",
 		        type: 'info',
@@ -57,6 +58,7 @@
 		}
 
 		function showSaved() {
+			hideNotification();
 			notice = $.pnotify({
 		        title: "Saved!",
 		        type: 'success',		        
@@ -74,6 +76,7 @@
 		        	})
 		        }
 			});
+			setInterval(function(){hideNotification()},1500);
 		}
 
 		function hideNotification() {
@@ -81,6 +84,7 @@
 		}
 
 		function saveData(event) {
+			showLoading();
 			$.ajax({
 				type: "POST",
 				url: $('.form-area').attr( 'action' ),
@@ -113,21 +117,25 @@
 		}
 				
 		function loadForm(event) {
+			showLoading();
 			$.ajax({
 				type: "GET",
 				url: "/data/AMA1/new",
 				complete: function( response ) {
-					$("#currentForm").html(response['responseText'])
+					$("#currentForm").html(response['responseText']);
+					hideNotification();
 				}
 			});
 		}
 
 		function loadData(id) {
+			showLoading();
 			$.ajax({
 				type: "GET",
 				url: "/data/AMA1/" + id,
 				complete: function( response ) {
 					$("#currentForm").html(response['responseText']);
+					hideNotification();
 
 					//reset scroll position
 					$(".form-area").scrollTop(scrollPosition);
