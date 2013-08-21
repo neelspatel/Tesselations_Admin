@@ -71,9 +71,10 @@
 				}
 			});
 		}
-
+		
+		var formSpinner = new Spinner(opts).spin($("#currentForm"));
+		
 		function loadForm() {
-			var formSpinner = new Spinner(opts).spin($("#currentForm"));
 			$.ajax({
 				type: "GET",
 				url: "/data/AMA1/new",
@@ -84,7 +85,6 @@
 		}
 
 		function loadData(id) {
-			var formSpinner = new Spinner(opts).spin($("#currentForm"));
 			$.ajax({
 				type: "GET",
 				url: "/data/AMA1/" + id,
