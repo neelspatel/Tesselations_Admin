@@ -115,7 +115,6 @@ tr {
     margin-top: 400px;
     font-size: 170px;
 
-    vertical-align:middle;
 
     border-radius: 15px;
     border-style:solid;
@@ -125,6 +124,10 @@ tr {
     -webkit-box-shadow: 13px 13px 11px rgba(50, 50, 50, 0.34);
     -moz-box-shadow:    13px 13px 11px rgba(50, 50, 50, 0.34);
     box-shadow:         13px 13px 11px rgba(50, 50, 50, 0.34);
+}
+
+.custom-alert-text{
+    vertical-align: center;
 }
 
 .loading {
