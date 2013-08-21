@@ -13,10 +13,7 @@
 	<link href="{% static 'data/css/custom.css' %}" rel="stylesheet" />
 	<link href="{% static 'data/css/jquery.pnotify.default.css' %}" media = "all" rel="stylesheet" />
 	<link href="{% static 'data/css/jquery.pnotify.default.icons.css' %}" media = "all" rel="stylesheet" />
-	<script type = "text/javascript" src="{% static 'data/js/jquery.pnotify.min.js' %}"></script>
-	
-
-	 
+	<script type = "text/javascript" src="{% static 'data/js/jquery.pnotify.min.js' %}"></script>		 
 
 	<meta name="author" content="Datanautix">
 
@@ -37,6 +34,47 @@
 
 		var scrollPosition;
 		var notice;
+
+		function showLoading() {
+			notice = $.pnotify({
+		        title: "Loading, please wait.",
+		        type: 'info',
+		        icon: 'picon picon-throbber',
+		        hide: false,
+		        closer: false,
+		        sticker: false,
+		        opacity: .9,
+		        shadow: false,
+		        width: "600px",
+		        pnotify_before_open: function(pnotify){
+		        // Position this notice in the center of the screen.
+		       		pnotify.css({
+		                "top": ($(window).height() / 2) - (pnotify.height() / 2),
+		                "left": ($(window).width() / 2) - (pnotify.width() / 2)
+		        	})
+		        }
+			});
+		}
+
+		function showSaved() {
+			notice = $.pnotify({
+		        title: "Saved!",
+		        type: 'success',		        
+		        hide: false,
+		        closer: false,
+		        sticker: false,
+		        opacity: .9,
+		        shadow: false,
+		        width: "600px",
+		        pnotify_before_open: function(pnotify){
+		        // Position this notice in the center of the screen.
+		       		pnotify.css({
+		                "top": ($(window).height() / 2) - (pnotify.height() / 2),
+		                "left": ($(window).width() / 2) - (pnotify.width() / 2)
+		        	})
+		        }
+			});
+		}
 
 		function saveData(event) {
 			$.ajax({
