@@ -6,7 +6,14 @@ body{
 }
 
 .form-area {
-    margin: 20px;
+    width: 800px;
+    height: 400px;
+
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    overflow-y: scroll;
+
 	background: url("../img/paper_fibers.png") repeat fixed;	
 }
 
