@@ -88,9 +88,8 @@ tr {
     margin-bottom: 5px;
 }
 
-.stickyTop {
-    width: 80%;
-    position:absolute;
+.stickyTop {    
+
     top:0px;
     height: 40px;
 }
