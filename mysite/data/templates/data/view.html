@@ -37,17 +37,22 @@
 
 		function showLoading() {
 			hideNotification();
+			var string = '<div class = "custom-alert loading"> Loading... </div>';
+			$("body").prepend(string);
 			
 		}
 
 		function showSaved() {
 			hideNotification();
+
+			var string = '<div class = "custom-alert saved"> Saved! </div>';
+			$("body").prepend(string);
 			
 			setTimeout(function(){hideNotification()},1000);
 		}
 
 		function hideNotification() {
-		
+			$(".custom-alert").remove();
 		}
 
 		function saveData(event) {

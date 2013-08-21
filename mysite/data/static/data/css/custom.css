@@ -126,16 +126,13 @@ tr {
     box-shadow:         13px 13px 11px rgba(50, 50, 50, 0.34);
 }
 
-.custom-alert-text{
-
-}
 
 .loading {
-    background-color: rgba(217,237,247,0.8);   
+    background-color: rgba(217,237,247,0.9);   
     color: #3A87AD;
 }
 
 .saved {
-    background-color: rgba(223,240,216,0.8);
+    background-color: rgba(223,240,216,0.9);
     color: #468847;
 }
