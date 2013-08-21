@@ -17,6 +17,10 @@
 		$(function(){
 			$(".dateinput").datepicker();
 		});
+
+		$(document).ready(function() {
+			$("#has_existing_id").find('input').attr('readonly','readonly');
+		});		
 	</script>
 </head>
 <body>
@@ -122,7 +126,10 @@
 						<td width="146" colspan="5" >
 							<emph>
 								{% if has_existing_id %}
-									<div id = "has_existing_id"> {{form.has_existing_id}} </div>
+									<div id = "has_existing_id"> 
+										{{form.has_existing_id}} 
+									</div>
+									{{form.has_existing_id}}
 								{% else %}
 									(Will be assigned upon saving)
 								{% endif %}

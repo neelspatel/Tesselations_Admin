@@ -63,3 +63,7 @@ td {
 tr {
     height: 50px;
 }
+
+#has_existing_id {
+    display: hidden;
+}
