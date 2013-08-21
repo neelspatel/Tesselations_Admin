@@ -47,6 +47,8 @@
 
 			$("body").on('click', '#submitButton', saveData);
 
+			var spinner = new Spinner(opts).spin(target);
+
 			loadList();
 			loadForm();
 		});		
