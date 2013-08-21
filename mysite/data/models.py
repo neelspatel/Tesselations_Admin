@@ -61,7 +61,7 @@ class AMA1(models.Model):
 		super(AMA1, self).save()
 
 		#now sets the id, so we know it is an existing version
-		has_existing_id = self.id
+		self.has_existing_id = self.id
 		super(AMA1, self).save()
 
 class AMA1Form(ModelForm):
