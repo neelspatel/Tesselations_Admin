@@ -30,9 +30,11 @@
 				url: $('#form').attr( 'action' ),
 				data: $('#form').serialize(),
 				complete: function( response ) {
-					alert(response);
+					alert(response);					
 				}
 			});
+
+			return false;
 		}
 	</script>
 </head>
