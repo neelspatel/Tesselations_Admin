@@ -20,7 +20,20 @@
 
 		$(document).ready(function() {
 			$("#has_existing_id").find('input').attr('readonly','readonly');
+
+			$("#submitButton").click(saveData);
 		});		
+
+		function saveData(event) {
+			$.ajax({
+				type: "POST",
+				url: $('#form').attr( 'action' ),
+				data: $('#form').serialize(),
+				complete: function( response ) {
+					alert(response);
+				}
+			});
+		}
 	</script>
 </head>
 <body>
@@ -424,7 +437,7 @@
 					</tr>
 				</tbody>
 			</table>
-			<input type="submit" value="Ready to go? Submit and save" class = "submitButton btn btn-large btn-primary" />
+			<input type="submit" value="Ready to go? Submit and save" class = "submitButton btn btn-large btn-primary" id = "submitButton"/>
 			</form>
 		</div>
 	</div>
