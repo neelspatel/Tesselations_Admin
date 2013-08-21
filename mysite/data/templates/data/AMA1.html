@@ -21,10 +21,10 @@
 </head>
 <body>
 	<form action="/data/AMA1/" method="post" class = "form-area" style = "width: 600; margin: auto">{% csrf_token %}
-	<table border="1" cellspacing="0" cellpadding="0" width="539" style = "margin: auto">
+	<table border="1" cellspacing="0" cellpadding="0" width="100%" style = "margin: auto">
 		<tbody>
 			<tr>
-				<td width="539" colspan="14">
+				<td width="100%" colspan="14">
 					<h1 style = "text-align:center;">AMA1 Grievance Form</h1>	
 					<p>					
 						<em>
@@ -35,7 +35,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td width="539" colspan="14">
+				<td width="100%" colspan="14">
 					<p align="center">
 						<strong>Part I:</strong>
 						<em></em>
@@ -43,20 +43,20 @@
 				</td>
 			</tr>
 			<tr>
-				<td width="99">
+				<td width="18%">
 					<p>
 						<strong>Grievance received by:</strong>
 					</p>
 				</td>
-				<td width="146" colspan="5" valign="top">
+				<td width="27%" colspan="5" valign="top">
 					{{ form.grievance_received_by }}
 				</td>
-				<td width="88" colspan="4" valign="top">
+				<td width="16%" colspan="4" valign="top">
 					<p>
 						<strong>Date of recording grievance:</strong>
 					</p>
 				</td>
-				<td width="206" colspan="4" valign="top">
+				<td width="39%" colspan="4" valign="top">
 					{{ form.date_of_recording }}
 				</td>
 			</tr>
