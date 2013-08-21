@@ -8,7 +8,9 @@ from data.models import AMA1, AMA1Form
 import json
 
 def main(request):
-	return render(request, 'data/view.html', {'list': []})
+	existing = AMA1.objects.all()
+
+	return render(request, 'data/view.html', {'list': existing})
 
 def newAMA1(request):	
 	form = AMA1Form()

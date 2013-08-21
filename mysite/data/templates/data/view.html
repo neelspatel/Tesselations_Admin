@@ -22,6 +22,8 @@
 			$("#has_existing_id").find('input').attr('readonly','readonly');
 
 			$("body").on('click', '#submitButton', saveData);
+
+			loadForm();
 		});		
 
 		function saveData(event) {
@@ -63,54 +65,11 @@
 <body>
 	<div class = "row-fluid" style = "width: 95%;">
 		<div class = "span4 left-pane">
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
-			Hey<br><br>
+			{% for current in list %}
+				<div class = "list-element" onclick = {{"loadData(" + current.id + ")"}}>
+					Hey, click here
+				</div>
+			{% endfor %}
 
 		</div>
 		<div class = "span8">
