@@ -12,7 +12,7 @@ Description:
 top: 300px;
 width: 300px;
 margin:auto;
-position: absolute;
+
 height: 300px;
 /* Ensures notices are above everything */
 z-index: 9999;
