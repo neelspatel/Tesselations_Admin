@@ -23,4 +23,5 @@ textarea {
 
 td {
     display: block;
+    height: 5px; /* this is just so it inherits tr height*/
 }
