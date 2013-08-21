@@ -101,11 +101,10 @@
 						scrollPosition = $(".form-area").scrollTop();
 
 						//then refresh
-						loadData(response['responseText']);
-
-						showSaved();
+						loadData(response['responseText']);			
 					}
 					loadList();
+					showSaved();
 				}
 			});
 
