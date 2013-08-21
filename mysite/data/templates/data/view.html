@@ -38,22 +38,22 @@
 		}
 
 		function loadForm() {
-			$.ajax({url: "http://ec2-54-212-98-241.us-west-2.compute.amazonaws.com/data/AMA1/new/"
-			}).success( function( response, status ) {
-				alert(JSON.stringify(response));
-			})
-			.error(function() {				  	  	
-				alert("Sorry, there was an error in getting this form.");
+			$.ajax({
+				type: "GET",
+				url: "data/AMA1/new",
+				complete: function( response ) {
+					alert(JSON.stringify(response));
+				}
 			});
 		}
 
 		function loadData(id) {
-			$.ajax({url: "http://ec2-54-212-98-241.us-west-2.compute.amazonaws.com/data/AMA1/" + id +"/"
-			}).success( function( response, status ) {
-				alert(JSON.stringify(response));
-			})
-			.error(function() {				  	  	
-				alert("Sorry, there was an error in getting this form.");
+			$.ajax({
+				type: "GET",
+				url: "data/AMA1/" + id,
+				complete: function( response ) {
+					alert(JSON.stringify(response));
+				}
 			});
 		}
 	</script>
