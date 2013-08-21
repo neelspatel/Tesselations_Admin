@@ -47,7 +47,7 @@
 		        opacity: .9,
 		        shadow: false,
 		        width: "800px",
-		        pnotify_after_open: function(pnotify){
+		        pnotify_before_open: function(pnotify){
 		        // Position this notice in the center of the screen.
 		       		pnotify.css({
 		                "top": 200,
@@ -68,7 +68,7 @@
 		        opacity: .9,
 		        shadow: false,
 		        width: "800px",
-		        pnotify_after_open: function(pnotify){
+		        pnotify_before_open: function(pnotify){
 		        // Position this notice in the center of the screen.
 		       		pnotify.css({
 		                "top": 200,
@@ -102,6 +102,8 @@
 
 						//then refresh
 						loadData(response['responseText']);
+
+						showSaved();
 					}
 					loadList();
 				}
