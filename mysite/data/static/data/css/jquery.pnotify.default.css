@@ -12,10 +12,10 @@ Description:
 top: 25px;
 right: 25px;
 position: absolute;
-height: 300px;
+height: 100px;
 /* Ensures notices are above everything */
 z-index: 9999;
-font-size: 300% !important;
+font-size: 3000% !important;
 }
 /* Hides position: fixed from IE6 */
 html > body .ui-pnotify {
