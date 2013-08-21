@@ -99,3 +99,33 @@ tr {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+.custom-alert {
+    z-index: 9999;
+    width: 600px;
+    height: 200px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 400px;
+    font-size: 170px;
+
+    border-radius: 15px;
+    border-style:solid;
+    border-width:medium;
+    border-color:rgba(220,220,220, 0.5);
+
+    -webkit-box-shadow: 13px 13px 11px rgba(50, 50, 50, 0.34);
+    -moz-box-shadow:    13px 13px 11px rgba(50, 50, 50, 0.34);
+    box-shadow:         13px 13px 11px rgba(50, 50, 50, 0.34);
+}
+
+.loading {
+    background-color: #D9EDF7;   
+    color: #3A87AD;
+}
+
+.saved {
+    background-color: #DFF0D8;
+    color: #468847;
+}
