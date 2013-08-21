@@ -43,6 +43,7 @@
 				url: "/data/AMA1/new",
 				complete: function( response ) {
 					alert(JSON.stringify(response));
+					$("#currentForm").html(response['response'])
 				}
 			});
 		}
@@ -53,6 +54,7 @@
 				url: "/data/AMA1/" + id,
 				complete: function( response ) {
 					alert(JSON.stringify(response));
+					$("#currentForm").html(response['response'])
 				}
 			});
 		}
