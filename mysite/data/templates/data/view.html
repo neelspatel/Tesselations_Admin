@@ -34,7 +34,7 @@
 				url: $('.form-area').attr( 'action' ),
 				data: $('.form-area').serialize(),
 				complete: function( response ) {
-					alert(response);
+					alert(JSON.stringify(response));
 					loadList();
 				}
 			});
