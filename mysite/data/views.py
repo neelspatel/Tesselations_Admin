@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from data.models import AMA1, AMA1Form
 
-def AMA1(request):
+def newAMA1(request):
 	if request.method == 'POST':		
 		form = AMA1Form(request.POST)	
 
