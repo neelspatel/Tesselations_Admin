@@ -75,7 +75,17 @@ tr {
     margin-top: 15px;
     margin-bottom: 5px;
     display: block;
-    width: 80%;
+    width: 40%;
+
+}
+
+.createButton {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    display: block;
+    width: 40%;
 
 }
 
@@ -87,14 +97,3 @@ tr {
     margin-top: 5px;
     margin-bottom: 5px;
 }
-
-.stickyTop {    
-
-    top:0px;
-    height: 40px;
-}
-
-.bottomPart {
-    margin-top: 70px;
-}
-
