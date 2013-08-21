@@ -9,8 +9,8 @@ Description:
 */
 /* -- Notice */
 .ui-pnotify {
-top: 25px;
-right: 25px;
+top: 200px;
+right: 300px;
 position: absolute;
 height: 150px;
 /* Ensures notices are above everything */
