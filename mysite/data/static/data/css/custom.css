@@ -106,8 +106,10 @@ tr {
     width: 800px;
     height: 200px;
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
+
+    left: 50%;
+    margin-left: -400px;
+
     margin-top: 400px;
     font-size: 170px;
 
