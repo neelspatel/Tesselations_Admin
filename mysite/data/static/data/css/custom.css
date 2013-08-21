@@ -109,8 +109,9 @@ tr {
 
     left: 50%;
     margin-left: -400px;
+    top:50%;
+    margin-top: -100px;
 
-    margin-top: 400px;
     font-size: 170px;
 
     border-radius: 15px;
