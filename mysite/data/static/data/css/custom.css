@@ -6,6 +6,7 @@ body{
 }
 
 .form-area {
+    margin: 20px;
 	background: url("../img/paper_fibers.png") repeat fixed;	
 }
 
