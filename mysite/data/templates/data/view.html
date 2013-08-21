@@ -65,7 +65,7 @@
 		<div class = "span2 left-pane">
 			{% for current in list %}
 				<div class = "list-element btn btn-info" onclick = "loadData({{current.id}})">
-					Hey, click here
+					Form {{current.id}}: {{current.date}}
 				</div>
 			{% endfor %}
 
