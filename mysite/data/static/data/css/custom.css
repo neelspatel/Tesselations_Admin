@@ -89,12 +89,13 @@ tr {
 }
 
 .stickyTop {
+    width: 80%;
     position:fixed;
     top:0px;
-    height: 50px;
+    height: 40px;
 }
 
 .bottomPart {
-    margin-top: 50px;
+    margin-top: 70px;
 }
 
