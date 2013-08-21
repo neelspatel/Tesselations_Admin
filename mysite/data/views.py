@@ -47,9 +47,9 @@ def existingAMA1(request, data_id):
 
 def csv(request):
 	response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="AMA1_' + strftime("%Y-%m-%d %H.%M.%S", gmtime()) + '.csv"'
+	response['Content-Disposition'] = 'attachment; filename="AMA1_' + strftime("%Y-%m-%d %H.%M.%S", gmtime()) + '.csv"'
 
-    writer = csv.writer(response)
+	writer = csv.writer(response)
 
 	serialized = serializers.serialize("python", AMA1.objects.all())
 
@@ -72,5 +72,3 @@ def csv(request):
 		writer.writerow(row)
 
 	return response
-
-
