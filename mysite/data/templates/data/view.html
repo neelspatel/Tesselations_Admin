@@ -21,7 +21,7 @@
 		$(document).ready(function() {
 			$("#has_existing_id").find('input').attr('readonly','readonly');
 
-			$("#submitButton").on('click', saveData);
+			$("body").on('click', '#submitButton', saveData);
 		});		
 
 		function saveData(event) {
