@@ -10,8 +10,6 @@ from django.core import serializers
 from time import gmtime, strftime
 import csv
 
-
-
 def main(request):	
 
 	return render(request, 'data/view.html', {})
