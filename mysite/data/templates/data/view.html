@@ -51,8 +51,8 @@
 			setTimeout(function(){hideNotification()},1000);
 		}
 
-		function hideNotification() {
-			$(".custom-alert").remove();
+		function hideNotification() {			
+			$(".custom-alert").hide('slow', function(){ $(".custom-alert").remove(); });
 		}
 
 		function saveData(event) {
