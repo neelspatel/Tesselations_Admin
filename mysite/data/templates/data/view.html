@@ -40,7 +40,7 @@
 		function loadForm() {
 			$.ajax({
 				type: "GET",
-				url: "data/AMA1/new",
+				url: "/data/AMA1/new",
 				complete: function( response ) {
 					alert(JSON.stringify(response));
 				}
@@ -50,7 +50,7 @@
 		function loadData(id) {
 			$.ajax({
 				type: "GET",
-				url: "data/AMA1/" + id,
+				url: "/data/AMA1/" + id,
 				complete: function( response ) {
 					alert(JSON.stringify(response));
 				}
