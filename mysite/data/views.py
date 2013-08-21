@@ -47,7 +47,7 @@ def existingAMA1(request, data_id):
 
 def downloadCSV(request):
 	response = HttpResponse(content_type='text/csv')
-	response['Content-Disposition'] = 'attachment; filename="AMA1_' + strftime("%Y-%m-%d %H.%M.%S", gmtime()) + '.csv"'
+	response['Content-Disposition'] = 'attachment; filename="AMA1_' + strftime("%Y-%m-%d %H.%M.%S", gmtime()) + '.txt"'
 
 	writer = csv.writer(response)
 
@@ -67,7 +67,10 @@ def downloadCSV(request):
 		for key in keys:
 			value = str(item['fields'][key])
 			value = value.replace('"', "'")
-			row.append('"' + value + '"')
+			if value == "":				
+				row.append('')
+			else:
+				row.append('"' + value + '"')
 
 		writer.writerow(row)
 
