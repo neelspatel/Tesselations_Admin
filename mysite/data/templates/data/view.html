@@ -135,15 +135,30 @@
 
 		</div>
 		<div class = "span10">
-			<button type="create" value="" class = "createButton btn btn-large btn-primary" id = "createButton">
-				<img src = "{% static 'data/img/new.ico' %}" style = "height: 30px; margin-right: 15px;"/>
-				Create a new form
-			</button>
+			<div class="row">
+				<div class="span3">
+					<button type="create" value="" class = "createButton btn btn-large btn-primary" id = "createButton">
+						<img src = "{% static 'data/img/new.ico' %}" style = "height: 30px; margin-right: 15px;"/>
+						Create a new form
+					</button>
+				</div>
+				<div class="span3">
+					<button type="download" value="" class = "downloadButton btn btn-large btn-warning" id = "downloadButton">
+						<img src = "{% static 'data/img/download.ico' %}" style = "height: 30px; margin-right: 15px;"/>
+						Download your data
+					</button>
+				</div>
+				<div class="span4">
+					<button type="submit" value="" class = "submitButton btn btn-large btn-success" id = "submitButton">
+						<img src = "{% static 'data/img/save.ico' %}" style = "height: 30px; margin-right: 15px;"/>
+						Ready to go? Submit and save
+					</button>
+				</div>
+		    </div>
 
-			<button type="submit" value="" class = "submitButton btn btn-large btn-success pull-right" id = "submitButton">
-				<img src = "{% static 'data/img/save.ico' %}" style = "height: 30px; margin-right: 15px;"/>
-				Ready to go? Submit and save
-			</button>
+			
+
+			
 
 			<div id = "currentForm">
 			</div>
