@@ -34,7 +34,7 @@ def saveAMA1(request):
 			return response
 		else:
 			data = form.save()				
-			response = HttpResponse("Saved")		
+			response = HttpResponse(data.id)		
 			return response		
 
 def existingAMA1(request, data_id):

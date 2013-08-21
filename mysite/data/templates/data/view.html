@@ -33,7 +33,8 @@
 				type: "POST",
 				url: $('.form-area').attr( 'action' ),
 				data: $('.form-area').serialize(),
-				complete: function( response ) {					
+				complete: function( response ) {
+					alert(response);
 					loadList();
 				}
 			});
