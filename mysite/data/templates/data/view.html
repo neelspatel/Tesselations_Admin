@@ -28,6 +28,8 @@
 			loadForm();
 		});		
 
+		var scrollPosition;
+
 		function saveData(event) {
 			$.ajax({
 				type: "POST",
@@ -38,13 +40,10 @@
 					if(response['responseText'] != "Updated") //if it's new
 					{
 						//save scroll position
-						var scrollPosition = $(".form-area").scrollTop();
+						scrollPosition = $(".form-area").scrollTop();
 
 						//then refresh
 						loadData(response['responseText']);
-
-						//reset scroll position
-						$(".form-area").scrollTop(scrollPosition);
 					}
 					loadList();
 				}
@@ -78,7 +77,11 @@
 				type: "GET",
 				url: "/data/AMA1/" + id,
 				complete: function( response ) {
-					$("#currentForm").html(response['responseText'])
+					$("#currentForm").html(response['responseText']);
+
+					//reset scroll position
+					$(".form-area").scrollTop(scrollPosition);
+					scrollPosition = 0;
 				}
 			});
 		}
