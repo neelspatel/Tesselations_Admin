@@ -7,8 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from data.models import AMA1, AMA1Form
 import json
 
-def main(request):
-	existing = AMA1.objects.all()
+def main(request):	
 
 	return render(request, 'data/view.html', {})
 
