@@ -38,7 +38,8 @@
 		function showLoading() {
 			hideNotification();
 			var string = '<div class = "custom-alert loading"> Loading... </div>';
-			$("body").prepend(string).fadeIn('slow');;
+			//$("body").prepend(string).fadeIn('slow');
+			$(string).hide().prependTo("body").fadeIn("slow");
 			
 		}
 
@@ -46,7 +47,8 @@
 			hideNotification();
 
 			var string = '<div class = "custom-alert saved"> Saved! </div>';
-			$("body").prepend(string).fadeIn('slow');
+			//$("body").prepend(string).fadeIn('slow');
+			$(string).hide().prependTo("body").fadeIn("slow");
 			
 			setTimeout(function(){hideNotification()},500);
 		}
