@@ -27,4 +27,4 @@ def newAMA1(request):
 def existingAMA1(request, data_id):
 	current = AMA1.objects.get(id=data_id)
 	form = AMA1Form(instance = current)
-	return render(request, 'data/AMA1.html', {'form': form})
+	return render(request, 'data/AMA1.html', {'form': form, 'has_existing_id': data_id})

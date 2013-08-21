@@ -120,7 +120,13 @@
 							</p>
 						</td>
 						<td width="146" colspan="5" >
-							<emph>(Will be assigned upon saving)</emph>
+							<emph>
+								{% if form.has_existing_id %}
+									{{form.has_existing_id}}
+								{% else %}
+									(Will be assigned upon saving)
+								{% endif %}
+							</emph>
 						</td>
 						<td width="88" colspan="4" >
 							<p>
