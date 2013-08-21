@@ -11,7 +11,7 @@ def newAMA1(request):
 		form = AMA1Form(request.POST)	
 
 		#checks if it was an old existing form
-		if form.cleaned_data['has_existing_id']:
+		if form.is_valid() && form.cleaned_data['has_existing_id']:
 			data = form.save()				
 			response = HttpResponse("Saved, it already existed!")		
 			return response
