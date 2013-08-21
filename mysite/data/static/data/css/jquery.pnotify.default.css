@@ -10,7 +10,7 @@ Description:
 /* -- Notice */
 .ui-pnotify {
 top: 300px;
-
+width: 300px;
 margin:auto;
 position: absolute;
 height: 300px;
