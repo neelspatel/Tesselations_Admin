@@ -13,6 +13,8 @@ def newAMA1(request):
 
 		#checks if it was an old existing form
 		if form.is_valid() and ('has_existing_id' in form.cleaned_data):
+			old = AMA1.objects.get(id=form.cleaned_data['has_existing_id'])
+			form = AMA1Form(request.POST, instance = old)	
 			data = form.save()				
 			response = HttpResponse("Existing: " + json.dumps(form.cleaned_data))		
 			return response
