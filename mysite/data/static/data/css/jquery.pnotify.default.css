@@ -12,7 +12,7 @@ Description:
 top: 25px;
 right: 25px;
 position: absolute;
-height: 100px;
+height: 150px;
 /* Ensures notices are above everything */
 z-index: 9999;
 font-size: 300% !important;
@@ -44,7 +44,7 @@ margin-left: .2em;
 .ui-pnotify-title {
 display: block;
 margin-bottom: .4em;
-font-size: 200px;
+font-size: 170px;
 }
 .ui-pnotify-text {
 display: block;
