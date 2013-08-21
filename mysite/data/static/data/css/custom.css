@@ -1,7 +1,7 @@
 body{
 	font-family:'Lato';	
-	background-color: rgba(173,216,230, 0.5);
-	background: url("../img/low_contrast_linen.png") repeat fixed;	
+	background-color: #f39c12;
+	/*background: url("../img/low_contrast_linen.png") repeat fixed;	*/
 
 }
 
@@ -13,7 +13,7 @@ body{
 
     padding: 10px;
 
-    background-color: cyan;
+    background-color: #3498db;
 }
 
 .form-area {
