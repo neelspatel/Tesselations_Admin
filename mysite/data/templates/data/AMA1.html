@@ -20,345 +20,352 @@
 	</script>
 </head>
 <body>
-	<form action="/data/AMA1/" method="post" class = "form-area">{% csrf_token %}
-	<table border="1" cellspacing="0" cellpadding="0" width="98%%" style = "margin: auto">
-		<tbody>
-			<tr>
-				<td width="100%" colspan="14">
-					<h1 style = "text-align:center;">AMA1 Grievance Form</h1>	
-					<p>					
-						<em>
-							Two grievance forms will be completed for each grievance raised: one form will be retained by the person raising the grievance, and one
-							form will be retained by AMA1 grievance personnel.
-						</em>
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<td width="100%" colspan="14">
-					<p align="center">
-						<strong>Part I:</strong>
-						<em></em>
-					</p>
-				</td>
-			</tr>
-			<tr >
-				<td width="18%">
-					<p>
-						<strong>Grievance received by:</strong>
-					</p>
-				</td>
-				<td width="27%" colspan="5" >
-					{{ form.grievance_received_by }}
-				</td>
-				<td width="16%" colspan="4" >
-					<p>
-						<strong>Date of recording grievance:</strong>
-					</p>
-				</td>
-				<td width="39%" colspan="4" >
-					{{ form.date_of_recording }}
-				</td>
-			</tr>
-			<tr>
-				<td width="99">
-					<p>
-						<strong>Grievance ID number:</strong>
-					</p>
-				</td>
-				<td width="146" colspan="5" >
-					<emph>(Will be assigned upon saving)</emph>
-				</td>
-				<td width="88" colspan="4" >
-					<p>
-						<strong>Name and ID of person with grievance:</strong>
-					</p>
-				</td>
-				<td width="206" colspan="4" rowspan="2" >
-					{{ form.name_and_id_of_person_with_grievance }}
-				</td>
-			</tr>
-			<tr>
-				<td width="99">
-					<p>
-						<strong>Contact details (residence/tel.etc.)</strong>
-					</p>
-				</td>
-				<td width="234" colspan="9" >
-					{{ form.contact_details }}
-				</td>
-			</tr>
-			<tr>
-				<td width="99">
-					<p>
-						<strong>Location (village) of incident:</strong>
-					</p>
-				</td>				
-				<td width="146" colspan="5" >
-					{{ form.location }}
-				</td>
-				<td width="88" colspan="4" >
-					<p>
-						<strong>Prod zone:</strong>
-					</p>
-				</td>
-				<td width="206" colspan="4" >
-					{{ form.prod_zone }}
-				</td>
-			</tr>
-			<tr>
-				<td width="539" colspan="14">
-					<p align="center">
-						<strong>Alleged grievance</strong>
-						<em></em>
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<td width="99" >
-					What happened
-				</td>
-				<td width="440" colspan="13" >
-					{{ form.what_happened }}
-				</td>
-			</tr>
-			<tr>
-				<td width="99" >
-					When		
-				</td>
-				<td width="440" colspan="13" >
-					{{ form.when }}
-				</td>
-			</tr>
-			<tr>
-				<td width="99" >
-					Where
-				</td>
-				<td width="440" colspan="13" >
-					{{ form.where }}
-				</td>
-			</tr>
-			<tr>
-				<td width="99" >
-					Who is involved
-				</td>
-				<td width="440" colspan="13" >
-					{{ form.who }}
-				</td>
-			</tr>
-			<tr>
-				<td width="99" >
-					Observations
-				</td>
-				<td width="440" colspan="13" >
-					{{ form.observations }}
-				</td>
-			</tr>
-			<tr>
-				<td width="99" >
-					<p>
-						<strong>Grievance category:</strong>
-					</p>
-				</td>	
-				<td width="440" colspan="13" >
-					{{ form.grievance_category }}
-				</td>			
-			</tr>
-			<tr>
-				<td width="99">
-					<p>
-						<strong>Additional documents provided:</strong>
-					</p>
-				</td>
-				<td width="440" colspan="13" >
-					{{ form.additional_documents }}
-				</td>
-			</tr>
-			<tr>
-				<td width="319" colspan="9">
-					<p>
-						<strong>Has this grievance been raised before by anyone else? (If yes, provide details.)</strong>
-					</p>
-				</td>
-				<td width="220" colspan="5" >
-					{{ form.has_grievance_been_raised_before }}
-				</td>
-			</tr>
-			<tr>
-				<td width="99">
-					<p>
-						<strong>Proposed solutions (according to the complainer)</strong>
-					</p>
-				</td>
-				<td width="440" colspan="13" >
-					{{ form.proposed_solutions_according_to_complainer }}	
-				</td>
-			</tr>
-			<tr>
-				<td width="539" colspan="14">
-					<p>
-						<strong>Signature of person receiving grievance:</strong>
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<td width="539" colspan="14">
-					<p align="center">
-						<strong>Part II: Parties involved</strong>
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<td width="99">
-					<p>
-						<strong>Entity Involved</strong> 
-					</p>
-				</td>
-				<td width="440" colspan="13" >
-					(Please choose Project if complaint involves AMA1 personnel or activities)
-					{{ form.entity_involved }}	
-				</td>
-			</tr>
-			<tr>
-				<td width="135" colspan="3" >
-					<p>
-						<strong>Name and other details of the supervisor contacted</strong>
-					</p>
-				</td>
-				<td width="404" colspan="11">
-					{{ form.name_of_supervisor }}	
-				</td>
-			</tr>
-			<tr>
-				<td width="135" colspan="3">
-					<p>
-						<strong>Comments from the contacted person about the grievance</strong>
-					</p>
-				</td>
-				<td width="404" colspan="11">
-					{{ form.comments_from_contacted_person }}	
-				</td>
-			</tr>
-			<tr>
-				<td width="539" colspan="14">
-					<p align="center">
-						<strong>Part III: Response Plan</strong>
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<td width="135" colspan="3">
-					<p>
-						<strong>Follow up actions </strong>
-					</p>
-				</td>
-				<td width="404" colspan="11">
-					{{ form.follow_up_actions }}	
-				</td>
-			</tr>
-			<tr>
-				<td width="135" colspan="3">
-					<p>
-						<strong>Response details </strong>
-					</p>
-				</td>
-				<td width="404" colspan="11">
-					{{ form.response_details }}	
-				</td>
-			</tr>
-			<tr>
-				<td width="135" colspan="3">
-					<p>
-						<strong>Grievance Resolution Responsibility </strong>
-					</p>
-				</td>
-				<td width="404" colspan="11">
-					{{ form.grievance_resolution_responsibility }}	
-				</td>
-			</tr>
-			<tr>
-				<td width="135" colspan="3">
-					<p>
-						<strong>Date of response</strong>
-					</p>
-				</td>
-				<td width="404" colspan="11">
-					{{ form.date_of_response }}
-				</td>
-			</tr>
-			<tr>
-				<td width="539" colspan="14">
-					<p align="center">
-						<strong>STATUS MONITORING PLAN</strong>
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<td width="131" colspan="2">
-					<p>
-						<strong>SOLVED </strong>
-					</p>
-				</td>
-				<td width="153" colspan="6">
-					<p>
-						<strong></strong>
-					</p>
-				</td>
-				<td width="255" colspan="6" rowspan="3" >
-				</td>
-			</tr>
-			<tr>
-				<td width="131" colspan="2">
-					<p>
-						<strong>NOT SOLVED</strong>
-					</p>
-				</td>
-				<td width="153" colspan="6">
-					<p>
-						<strong></strong>
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<td width="131" colspan="2">
-					<p>
-						<strong>PENDING</strong>
-					</p>
-				</td>
-				<td width="153" colspan="6">
-					<p>
-						<strong></strong>
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<td width="539" colspan="14">
-					<p>
-						<strong>COMMENTS </strong>
-					</p>
-					<p>
-						<strong></strong>
-					</p>
-					<p>
-						<strong></strong>
-					</p>
-					<p>
-						<strong></strong>
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<td width="131" colspan="2">
-					<p>
-						<strong>Date and Place</strong>
-					</p>
-				</td>
-				<td width="408" colspan="12">
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<input type="submit" value="Submit" />
-	</form>
+	<div class = "row">
+		<div class = "span4">
+			Hey
+		</div>
+		<div class = "span8">
+			<form action="/data/AMA1/" method="post" class = "form-area">{% csrf_token %}
+			<table border="1" cellspacing="0" cellpadding="0" width="98%%" style = "margin: auto">
+				<tbody>
+					<tr>
+						<td width="100%" colspan="14">
+							<h1 style = "text-align:center;">AMA1 Grievance Form</h1>	
+							<p>					
+								<em>
+									Two grievance forms will be completed for each grievance raised: one form will be retained by the person raising the grievance, and one
+									form will be retained by AMA1 grievance personnel.
+								</em>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td width="100%" colspan="14">
+							<p align="center">
+								<strong>Part I:</strong>
+								<em></em>
+							</p>
+						</td>
+					</tr>
+					<tr >
+						<td width="18%">
+							<p>
+								<strong>Grievance received by:</strong>
+							</p>
+						</td>
+						<td width="27%" colspan="5" >
+							{{ form.grievance_received_by }}
+						</td>
+						<td width="16%" colspan="4" >
+							<p>
+								<strong>Date of recording grievance:</strong>
+							</p>
+						</td>
+						<td width="39%" colspan="4" >
+							{{ form.date_of_recording }}
+						</td>
+					</tr>
+					<tr>
+						<td width="99">
+							<p>
+								<strong>Grievance ID number:</strong>
+							</p>
+						</td>
+						<td width="146" colspan="5" >
+							<emph>(Will be assigned upon saving)</emph>
+						</td>
+						<td width="88" colspan="4" >
+							<p>
+								<strong>Name and ID of person with grievance:</strong>
+							</p>
+						</td>
+						<td width="206" colspan="4" rowspan="2" >
+							{{ form.name_and_id_of_person_with_grievance }}
+						</td>
+					</tr>
+					<tr>
+						<td width="99">
+							<p>
+								<strong>Contact details (residence/tel.etc.)</strong>
+							</p>
+						</td>
+						<td width="234" colspan="9" >
+							{{ form.contact_details }}
+						</td>
+					</tr>
+					<tr>
+						<td width="99">
+							<p>
+								<strong>Location (village) of incident:</strong>
+							</p>
+						</td>				
+						<td width="146" colspan="5" >
+							{{ form.location }}
+						</td>
+						<td width="88" colspan="4" >
+							<p>
+								<strong>Prod zone:</strong>
+							</p>
+						</td>
+						<td width="206" colspan="4" >
+							{{ form.prod_zone }}
+						</td>
+					</tr>
+					<tr>
+						<td width="539" colspan="14">
+							<p align="center">
+								<strong>Alleged grievance</strong>
+								<em></em>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td width="99" >
+							What happened
+						</td>
+						<td width="440" colspan="13" >
+							{{ form.what_happened }}
+						</td>
+					</tr>
+					<tr>
+						<td width="99" >
+							When		
+						</td>
+						<td width="440" colspan="13" >
+							{{ form.when }}
+						</td>
+					</tr>
+					<tr>
+						<td width="99" >
+							Where
+						</td>
+						<td width="440" colspan="13" >
+							{{ form.where }}
+						</td>
+					</tr>
+					<tr>
+						<td width="99" >
+							Who is involved
+						</td>
+						<td width="440" colspan="13" >
+							{{ form.who }}
+						</td>
+					</tr>
+					<tr>
+						<td width="99" >
+							Observations
+						</td>
+						<td width="440" colspan="13" >
+							{{ form.observations }}
+						</td>
+					</tr>
+					<tr>
+						<td width="99" >
+							<p>
+								<strong>Grievance category:</strong>
+							</p>
+						</td>	
+						<td width="440" colspan="13" >
+							{{ form.grievance_category }}
+						</td>			
+					</tr>
+					<tr>
+						<td width="99">
+							<p>
+								<strong>Additional documents provided:</strong>
+							</p>
+						</td>
+						<td width="440" colspan="13" >
+							{{ form.additional_documents }}
+						</td>
+					</tr>
+					<tr>
+						<td width="319" colspan="9">
+							<p>
+								<strong>Has this grievance been raised before by anyone else? (If yes, provide details.)</strong>
+							</p>
+						</td>
+						<td width="220" colspan="5" >
+							{{ form.has_grievance_been_raised_before }}
+						</td>
+					</tr>
+					<tr>
+						<td width="99">
+							<p>
+								<strong>Proposed solutions (according to the complainer)</strong>
+							</p>
+						</td>
+						<td width="440" colspan="13" >
+							{{ form.proposed_solutions_according_to_complainer }}	
+						</td>
+					</tr>
+					<tr>
+						<td width="539" colspan="14">
+							<p>
+								<strong>Signature of person receiving grievance:</strong>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td width="539" colspan="14">
+							<p align="center">
+								<strong>Part II: Parties involved</strong>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td width="99">
+							<p>
+								<strong>Entity Involved</strong> 
+							</p>
+						</td>
+						<td width="440" colspan="13" >
+							(Please choose Project if complaint involves AMA1 personnel or activities)
+							{{ form.entity_involved }}	
+						</td>
+					</tr>
+					<tr>
+						<td width="135" colspan="3" >
+							<p>
+								<strong>Name and other details of the supervisor contacted</strong>
+							</p>
+						</td>
+						<td width="404" colspan="11">
+							{{ form.name_of_supervisor }}	
+						</td>
+					</tr>
+					<tr>
+						<td width="135" colspan="3">
+							<p>
+								<strong>Comments from the contacted person about the grievance</strong>
+							</p>
+						</td>
+						<td width="404" colspan="11">
+							{{ form.comments_from_contacted_person }}	
+						</td>
+					</tr>
+					<tr>
+						<td width="539" colspan="14">
+							<p align="center">
+								<strong>Part III: Response Plan</strong>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td width="135" colspan="3">
+							<p>
+								<strong>Follow up actions </strong>
+							</p>
+						</td>
+						<td width="404" colspan="11">
+							{{ form.follow_up_actions }}	
+						</td>
+					</tr>
+					<tr>
+						<td width="135" colspan="3">
+							<p>
+								<strong>Response details </strong>
+							</p>
+						</td>
+						<td width="404" colspan="11">
+							{{ form.response_details }}	
+						</td>
+					</tr>
+					<tr>
+						<td width="135" colspan="3">
+							<p>
+								<strong>Grievance Resolution Responsibility </strong>
+							</p>
+						</td>
+						<td width="404" colspan="11">
+							{{ form.grievance_resolution_responsibility }}	
+						</td>
+					</tr>
+					<tr>
+						<td width="135" colspan="3">
+							<p>
+								<strong>Date of response</strong>
+							</p>
+						</td>
+						<td width="404" colspan="11">
+							{{ form.date_of_response }}
+						</td>
+					</tr>
+					<tr>
+						<td width="539" colspan="14">
+							<p align="center">
+								<strong>STATUS MONITORING PLAN</strong>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td width="131" colspan="2">
+							<p>
+								<strong>SOLVED </strong>
+							</p>
+						</td>
+						<td width="153" colspan="6">
+							<p>
+								<strong></strong>
+							</p>
+						</td>
+						<td width="255" colspan="6" rowspan="3" >
+						</td>
+					</tr>
+					<tr>
+						<td width="131" colspan="2">
+							<p>
+								<strong>NOT SOLVED</strong>
+							</p>
+						</td>
+						<td width="153" colspan="6">
+							<p>
+								<strong></strong>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td width="131" colspan="2">
+							<p>
+								<strong>PENDING</strong>
+							</p>
+						</td>
+						<td width="153" colspan="6">
+							<p>
+								<strong></strong>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td width="539" colspan="14">
+							<p>
+								<strong>COMMENTS </strong>
+							</p>
+							<p>
+								<strong></strong>
+							</p>
+							<p>
+								<strong></strong>
+							</p>
+							<p>
+								<strong></strong>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td width="131" colspan="2">
+							<p>
+								<strong>Date and Place</strong>
+							</p>
+						</td>
+						<td width="408" colspan="12">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<input type="submit" value="Submit" />
+			</form>
+		</div>
+	</div>
 </body>
 
