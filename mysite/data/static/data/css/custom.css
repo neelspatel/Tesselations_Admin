@@ -71,8 +71,9 @@ tr {
 .submitButton {
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
+    margin-top: 5px;
     margin-bottom: 20px;
     display: block;
+    width: 80%;
 
 }
