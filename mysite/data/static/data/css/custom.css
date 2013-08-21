@@ -45,6 +45,17 @@ textarea {
             box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
 }
 
+select {
+    border: none;
+    width: 96%;
+    height: 96%;
+    margin: auto;
+    display: block;
+    -webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
+       -moz-box-sizing: border-box; /* FF1+ */
+            box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
+}
+
 td {
     display: block;
     height: 50px; /* this is just so it inherits tr height*/
