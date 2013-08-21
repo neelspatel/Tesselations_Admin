@@ -4,6 +4,7 @@
 	<title>AMA1 Form Data Entry</title>
 	<link href="{% static 'data/css/bootstrap.min.css' %}" rel="stylesheet" />
 	<link href="{% static 'data/css/custom.css' %}" rel="stylesheet" />
+	<script type = "text/javascript" src="{% static 'data/js/spin.js' %}"></script>
 
 	<link href='http://fonts.googleapis.com/css?family=Lato:300,300italic,700,900|Cabin:400,600,700' rel='stylesheet' type='text/css'>
 
@@ -17,6 +18,26 @@
 		$(function(){
 			$(".dateinput").datepicker();
 		});
+
+		//spinner options
+		var opts = {
+		  lines: 13, // The number of lines to draw
+		  length: 50, // The length of each line
+		  width: 10, // The line thickness
+		  radius: 50, // The radius of the inner circle
+		  corners: 1, // Corner roundness (0..1)
+		  rotate: 0, // The rotation offset
+		  direction: 1, // 1: clockwise, -1: counterclockwise
+		  color: '#34495e', // #rgb or #rrggbb or array of colors
+		  speed: 1, // Rounds per second
+		  trail: 60, // Afterglow percentage
+		  shadow: true, // Whether to render a shadow
+		  hwaccel: false, // Whether to use hardware acceleration
+		  className: 'spinner', // The CSS class to assign to the spinner
+		  zIndex: 2e9, // The z-index (defaults to 2000000000)
+		  top: 'auto', // Top position relative to parent in px
+		  left: 'auto' // Left position relative to parent in px
+		};
 
 		$(document).ready(function() {
 			$("#has_existing_id").find('input').attr('readonly','readonly');
@@ -32,8 +53,7 @@
 				type: "POST",
 				url: $('.form-area').attr( 'action' ),
 				data: $('.form-area').serialize(),
-				complete: function( response ) {
-					alert("Saved!");
+				complete: function( response ) {					
 					loadList();
 				}
 			});
@@ -42,6 +62,7 @@
 		}
 
 		function loadList() {
+			var listSpinner = new Spinner(opts).spin($(".left-pane"));
 			$.ajax({
 				type: "GET",
 				url: "/data/AMA1/list",
@@ -52,6 +73,7 @@
 		}
 
 		function loadForm() {
+			var formSpinner = new Spinner(opts).spin($("#currentForm"));
 			$.ajax({
 				type: "GET",
 				url: "/data/AMA1/new",
@@ -62,6 +84,7 @@
 		}
 
 		function loadData(id) {
+			var formSpinner = new Spinner(opts).spin($("#currentForm"));
 			$.ajax({
 				type: "GET",
 				url: "/data/AMA1/" + id,
