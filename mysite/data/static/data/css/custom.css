@@ -6,6 +6,8 @@ body{
 }
 
 .left-pane {
+    position: fixed;
+
     width: 100%;
     height: 100%;
 
