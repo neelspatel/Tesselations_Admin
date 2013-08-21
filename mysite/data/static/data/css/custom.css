@@ -46,7 +46,8 @@ textarea {
 }
 
 select {    
-    width: 96%;    
+    width: 96%; 
+    height: 96%;   
     margin: auto;
     display: block;
     -webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
