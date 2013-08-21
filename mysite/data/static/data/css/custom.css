@@ -90,7 +90,7 @@ tr {
 
 .stickyTop {
     width: 80%;
-    position:fixed;
+    position:absolute;
     top:0px;
     height: 40px;
 }
