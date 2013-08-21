@@ -5,6 +5,10 @@ body{
 
 }
 
+.btn {
+    font-family:'Lato'; 
+}
+
 .left-pane {
     width: 100%;
     height: 100%;
