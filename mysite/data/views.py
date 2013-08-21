@@ -45,7 +45,7 @@ def existingAMA1(request, data_id):
 	form = AMA1Form(instance = current)
 	return render(request, 'data/AMA1.html', {'form': form, 'has_existing_id': data_id})
 
-def csv(request):
+def downloadCSV(request):
 	response = HttpResponse(content_type='text/csv')
 	response['Content-Disposition'] = 'attachment; filename="AMA1_' + strftime("%Y-%m-%d %H.%M.%S", gmtime()) + '.csv"'
 
