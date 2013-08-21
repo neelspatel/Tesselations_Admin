@@ -70,7 +70,7 @@ tr {
 }
 
 .submitButton {
-    
+    margin-right: 50px;
     margin-top: 15px;
     margin-bottom: 5px;
     display: inline-block;
@@ -79,7 +79,7 @@ tr {
 }
 
 .createButton {
-
+    margin-left: 50px;
     margin-top: 15px;
     margin-bottom: 5px;
     display: inline-block;
