@@ -30,6 +30,7 @@ class JQueryUIDatepickerWidget(forms.DateInput):
         super(forms.DateInput, self).__init__(attrs={"size":10, "class": "dateinput"}, **kwargs)
 
 class AMA1(models.Model):
+	has_existing_id = models.IntegerField(null=True, blank=True)
 	grievance_received_by = models.TextField(null=True, blank=True)
 	date_of_recording = models.TextField(null=True, blank=True)
 	name_and_id_of_person_with_grievance = models.TextField(null=True, blank=True)
@@ -55,12 +56,16 @@ class AMA1(models.Model):
 	date_of_response = models.TextField(null=True, blank=True)
 	data_created_date = models.DateTimeField('Entry created:', null=True, blank=True)
 
-	def save(self):
+	def save(self):		
 		self.data_created_date = datetime.now()
+		super(AMA1, self).save()
+
+		#now sets the id, so we know it is an existing version
+		has_existing_id = self.id
 		super(AMA1, self).save()
 
 class AMA1Form(ModelForm):
 	class Meta:
 		model = AMA1
-		exclude = ['data_created_date']
+		exclude = ['data_created_date', 'has_existing_id']
 
