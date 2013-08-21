@@ -65,5 +65,5 @@ tr {
 }
 
 .has_existing_id {
-    display: hidden;
+    display: none !important;
 }
