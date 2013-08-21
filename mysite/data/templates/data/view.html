@@ -66,7 +66,7 @@
 	<div class = "row-fluid" style = "width: 95%;">
 		<div class = "span4 left-pane">
 			{% for current in list %}
-				<div class = "list-element" onclick = "loadData(" + {{current.id}} + ")">
+				<div class = "list-element" onclick = "loadData({{current.id}})">
 					Hey, click here
 				</div>
 			{% endfor %}
