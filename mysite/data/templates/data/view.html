@@ -27,7 +27,7 @@
 
 			$("body").on('click', '#submitButton', saveData);		
 			$("body").on('click', '#createButton', loadForm);		
-			$("body").on('click', '.custom-alert', hideNotification);		
+			$("body").on('click', '.custom-alert', hideNotification);
 
 			loadList();
 			loadForm();
@@ -35,6 +35,10 @@
 
 		var scrollPosition;
 		var notice;
+
+		function showClick(event) {
+			$(this).removeClass('btn-info').addClass('btn-danger');
+		}
 
 		function showLoading() {
 			hideNotification();
