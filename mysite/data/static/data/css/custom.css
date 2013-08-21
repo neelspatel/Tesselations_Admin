@@ -13,7 +13,7 @@ body{
 
     padding: 10px;
 
-    background-color: #bdc3c7;
+    background: url("../img/paper_fibers.png") repeat fixed;
 }
 
 .form-area {
