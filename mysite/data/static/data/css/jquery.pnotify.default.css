@@ -9,7 +9,7 @@ Description:
 */
 /* -- Notice */
 .ui-pnotify {
-margin-top: 200px;
+top: 200px;
 margin-right: 300px;
 position: absolute;
 height: 150px;
