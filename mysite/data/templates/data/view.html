@@ -80,7 +80,11 @@
 		}
 
 		function hideNotification() {
-			notice.remove();
+			if(notice)
+			{
+
+				notice.remove();
+			}
 		}
 
 		function saveData(event) {
