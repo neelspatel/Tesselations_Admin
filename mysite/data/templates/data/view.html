@@ -77,7 +77,8 @@
 				type: "POST",
 				url: $('.form-area').attr( 'action' ),
 				data: $('.form-area').serialize(),
-				complete: function( response ) {					
+				complete: function( response ) {	
+					hideNotification();				
 
 					if(response['responseText'] != "Updated") //if it's new
 					{
