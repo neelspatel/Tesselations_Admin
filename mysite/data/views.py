@@ -10,7 +10,13 @@ import json
 def main(request):
 	existing = AMA1.objects.all()
 
-	return render(request, 'data/view.html', {'list': existing})
+	return render(request, 'data/view.html', {})
+
+def list(request):
+	existing = AMA1.objects.all()
+
+	return render(request, 'data/list.html', {'list': existing})
+
 
 def newAMA1(request):	
 	form = AMA1Form()
