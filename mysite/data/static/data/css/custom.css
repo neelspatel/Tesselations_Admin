@@ -82,5 +82,9 @@ tr {
 .list-element {
     width: 100%;
     height: 30px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
