@@ -37,8 +37,14 @@
 
 					if(response['responseText'] != "Updated") //if it's new
 					{
+						//save scroll position
+						var scrollPosition = $(".form-area").scrollTop();
+
 						//then refresh
 						loadData(response['responseText']);
+
+						//reset scroll position
+						$(".form-area").scrollTop(scrollPosition);
 					}
 					loadList();
 				}
