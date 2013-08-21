@@ -30,7 +30,7 @@ def saveAMA1(request):
 			old = AMA1.objects.get(id=form.cleaned_data['has_existing_id'])
 			form = AMA1Form(request.POST, instance = old)	
 			data = form.save()				
-			response = HttpResponse("Saved")
+			response = HttpResponse("Updated")
 			return response
 		else:
 			data = form.save()				

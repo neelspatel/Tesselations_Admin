@@ -33,8 +33,13 @@
 				type: "POST",
 				url: $('.form-area').attr( 'action' ),
 				data: $('.form-area').serialize(),
-				complete: function( response ) {
-					alert(JSON.stringify(response));
+				complete: function( response ) {					
+
+					if(response['responseText'] != "Updated") //if it's new
+					{
+						//then refresh
+						loadData(response['responseText']);
+					}
 					loadList();
 				}
 			});
