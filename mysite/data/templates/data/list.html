@@ -1,5 +1,11 @@
-{% for current in list %}
-	<div class = "list-element btn btn-info" onclick = "loadData({{current.id}})">
-		Form {{current.id}}: {{current.data_created_date}}
-	</div>
-{% endfor %}
+<div class = "list-element btn btn-info stickyTop">
+	New Form
+</div>
+
+<div class = "bottomPart">
+	{% for current in list %}
+		<div class = "list-element btn btn-info" onclick = "loadData({{current.id}})">
+			Form {{current.id}}: {{current.data_created_date}}
+		</div>
+	{% endfor %}
+</div>

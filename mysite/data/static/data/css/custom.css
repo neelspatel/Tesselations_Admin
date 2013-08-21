@@ -88,3 +88,13 @@ tr {
     margin-bottom: 5px;
 }
 
+.stickyTop {
+    position:fixed;
+    top:0px;
+    height: 50px;
+}
+
+.bottomPart {
+    margin-top: 50px;
+}
+
