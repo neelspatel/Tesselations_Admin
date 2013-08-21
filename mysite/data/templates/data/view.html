@@ -64,7 +64,7 @@
 </head>
 <body>
 	<div class = "row-fluid" style = "width: 95%;">
-		<div class = "span4 left-pane">
+		<div class = "span2 left-pane">
 			{% for current in list %}
 				<div class = "list-element" onclick = "loadData({{current.id}})">
 					Hey, click here
@@ -72,7 +72,7 @@
 			{% endfor %}
 
 		</div>
-		<div class = "span8">
+		<div class = "span10">
 			<input type="submit" value="Ready to go? Submit and save" class = "submitButton btn btn-large btn-primary" id = "submitButton"/>
 
 			<div id = "currentForm">
