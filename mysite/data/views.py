@@ -70,7 +70,7 @@ def downloadCSV(request):
 			if value == "":				
 				row.append('')
 			else:
-				row.append('"' + value + '"')
+				row.append(value)
 
 		writer.writerow(row)
 
