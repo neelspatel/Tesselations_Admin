@@ -76,6 +76,10 @@
 			});
 		}
 
+		function hideNotification() {
+			notice.remove();
+		}
+
 		function saveData(event) {
 			$.ajax({
 				type: "POST",
