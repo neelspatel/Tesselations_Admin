@@ -64,7 +64,7 @@
 		        history: false		       
 		        
 			});
-			setInterval(function(){hideNotification()},3000);
+			setTimeout(function(){hideNotification()},3000);
 		}
 
 		function hideNotification() {
@@ -89,7 +89,7 @@
 						loadData(response['responseText']);			
 					}
 					loadList();
-					showSaved();
+					setTimeout(function(){showSaved()},1000);
 				}
 			});
 
