@@ -47,7 +47,7 @@ def existingAMA1(request, data_id):
 
 def downloadCSV(request):
 	response = HttpResponse(content_type='text/csv')
-	response['Content-Disposition'] = 'attachment; filename="AMA1_' + strftime("%Y-%m-%d %H.%M.%S", gmtime()) + '.txt"'
+	response['Content-Disposition'] = 'attachment; filename="AMA1_' + strftime("%Y-%m-%d %H.%M.%S", gmtime()) + '.csv"'
 
 	writer = csv.writer(response)
 
