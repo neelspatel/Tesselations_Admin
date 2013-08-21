@@ -52,7 +52,7 @@
 		}
 
 		function hideNotification() {			
-			$(".custom-alert").hide('fast', function(){ $(".custom-alert").remove(); });
+			$(".custom-alert").fadeOut('fast', function(){ $(".custom-alert").remove(); });
 		}
 
 		function saveData(event) {
