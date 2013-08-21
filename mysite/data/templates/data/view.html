@@ -32,7 +32,7 @@
 				url: $('.form-area').attr( 'action' ),
 				data: $('.form-area').serialize(),
 				complete: function( response ) {
-					alert(JSON.stringify(response));
+					alert("Saved!");
 				}
 			});
 
@@ -44,7 +44,6 @@
 				type: "GET",
 				url: "/data/AMA1/new",
 				complete: function( response ) {
-					alert(JSON.stringify(response));
 					$("#currentForm").html(response['responseText'])
 				}
 			});
@@ -55,7 +54,6 @@
 				type: "GET",
 				url: "/data/AMA1/" + id,
 				complete: function( response ) {
-					alert(JSON.stringify(response));
 					$("#currentForm").html(response['responseText'])
 				}
 			});
