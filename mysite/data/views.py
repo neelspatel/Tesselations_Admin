@@ -7,7 +7,14 @@ from django.views.decorators.csrf import csrf_exempt
 from data.models import AMA1, AMA1Form
 import json
 
-def newAMA1(request):
+def main(request):
+	return render(request, 'data/view.html', {'list': []})
+
+def newAMA1(request):	
+	form = AMA1Form()
+	return render(request, 'data/AMA1.html', {'form': form})
+
+def saveAMA1(request):
 	if request.method == 'POST':		
 		form = AMA1Form(request.POST)	
 
@@ -16,15 +23,12 @@ def newAMA1(request):
 			old = AMA1.objects.get(id=form.cleaned_data['has_existing_id'])
 			form = AMA1Form(request.POST, instance = old)	
 			data = form.save()				
-			response = HttpResponse("Existing: " + json.dumps(form.cleaned_data))		
+			response = HttpResponse("Saved")
 			return response
 		else:
 			data = form.save()				
-			response = HttpResponse("New: " + json.dumps(form.cleaned_data))			
-			return response
-	else:
-		form = AMA1Form()
-		return render(request, 'data/AMA1.html', {'form': form})
+			response = HttpResponse("Saved")		
+			return response		
 
 def existingAMA1(request, data_id):
 	current = AMA1.objects.get(id=data_id)
