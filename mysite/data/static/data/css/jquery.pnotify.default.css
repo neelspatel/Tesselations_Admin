@@ -45,8 +45,8 @@ margin-left: .2em;
 display: block;
 margin-top: 60px !important;
 margin-bottom: .4em;
-margin-left: auto;
-margin-right: auto;
+margin-left: auto !important;
+margin-right: auto !important;
 font-size: 170px;
 }
 .ui-pnotify-text {
