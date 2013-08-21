@@ -23,10 +23,10 @@ textarea {
 
 td {
     display: block;
-    height: 25px; /* this is just so it inherits tr height*/
+    height: 50px; /* this is just so it inherits tr height*/
     padding: 5px;
 }
 
 tr {
-    height: 25px;
+    height: 50px;
 }
