@@ -68,6 +68,11 @@
 		}
 
 		function hideNotification() {
+			if(notice)
+			{
+				notice.remove();
+			}
+
 			$.pnotify_remove_all();
 		}
 
