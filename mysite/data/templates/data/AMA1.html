@@ -27,8 +27,8 @@
 		function saveData(event) {
 			$.ajax({
 				type: "POST",
-				url: $('#form').attr( 'action' ),
-				data: $('#form').serialize(),
+				url: $('.form-area').attr( 'action' ),
+				data: $('.form-area').serialize(),
 				complete: function( response ) {
 					alert(JSON.stringify(response));					
 				}
